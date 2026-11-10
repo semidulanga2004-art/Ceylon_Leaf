@@ -30,10 +30,7 @@
         </div> 
     </section>
 
-    
-         
-                   
-       <!-- Category Section -->
+    <!-- Category Section -->
     <section class="category" id="category">
         <h2 class="section-title">Our Products</h2>
         <div class="product-grid">
@@ -83,6 +80,19 @@
 
     <!-- Include Footer -->
      <?php include 'footer.php'; ?>
+
+    <!-- Popup Modal for Description -->
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
 
 </body>   
 </html> 
