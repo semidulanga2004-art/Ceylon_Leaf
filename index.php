@@ -1,4 +1,4 @@
-<?php include 'db_connect.php'; ?>
+<?php require_once __DIR__ . '/database/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -37,10 +37,11 @@
             <?php
             // Fetch products from database
             $sql = "SELECT * FROM products ORDER BY id DESC";
-            $result = $conn->query($sql);
+            $stmt = $pdo->query($sql);
+            $products = $stmt->fetchAll();
 
-            if ($result && $result->num_rows > 0): //Check whether the database return any product
-                while ($row = $result->fetch_assoc()): // display each product
+            if (count($products) > 0):
+                foreach ($products as $row):
             ?>
                     <div class="product-card slide-up" data-description="<?php echo htmlspecialchars($row['description']); ?>">
                         <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
@@ -62,7 +63,7 @@
                         </div>
                     </div>
                 <?php
-                endwhile;
+                endforeach;
             else:
                 ?>
                 <p>No products available at the moment.</p>

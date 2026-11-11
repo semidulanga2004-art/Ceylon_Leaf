@@ -14,13 +14,13 @@ if (session_status() === PHP_SESSION_NONE) {
         <a href="#aboutus">About Us</a>
 
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            //checks whether the logged-in session variable exists and its value is true, and if it is true it display the following navigation links
+            <!-- Check whether the user is logged in -->
             <a href="cart.php" class="cart-icon">🛒 Cart</a>
             <a href="history.php">Buying History</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
             <a href="logout.php" class="btn-login">Logout</a>
 
-        <?php else: ?> //If the user has not logged in it shows the below navigation links
+        <?php else: ?> <!If the user has not logged in it shows the below navigation links
 
             <!-- Day / Night Mode Toggle Button -->
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
