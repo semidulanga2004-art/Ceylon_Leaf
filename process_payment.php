@@ -1,8 +1,6 @@
 
 <?php
-
 session_start();
-
 include 'db_connect.php';
 
 // Check whether the customer is logged in
@@ -52,10 +50,50 @@ if (empty($items)) {
 $vat = $subtotal * 0.10;
 $grand_total = $subtotal + $vat;
 
-
-
 // 2. Retrieve customer information
 $user_stmt = $conn->prepare("SELECT full_name, email, telephone, address FROM users WHERE id = ?");
 $user_stmt->execute([$user_id]);
 $user_data = $user_stmt->fetch(PDO::FETCH_ASSOC);
 
+// 3. Generate a unique bill number
+$bill_number = "INV-" . time() . "-" . mt_rand(100, 999);
+
+// 4. Insert new order into the orders table
+$order_stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, bill_number) VALUES (?, ?, ?)");
+
+if ($order_stmt->execute([$user_id, $grand_total, $bill_number])) {
+
+    $order_id = $conn->lastInsertId();
+
+    $email_items_list = "";
+
+    // 5. Save purchased items and remove them from the cart
+    foreach ($items as $item) {
+
+        $item_stmt = $conn->prepare("INSERT INTO order_items (order_id, product_name, quantity, price) VALUES (?, ?, ?, ?)");
+        $item_stmt->execute([$order_id, $item['product_name'], $item['quantity'], $item['price']]);
+
+        // Remove purchased item from customer's cart
+        $del_stmt = $conn->prepare("DELETE FROM cart WHERE id = ? AND user_id = ?");
+        $del_stmt->execute([$item['cart_id'], $user_id]);
+
+        $item_subtotal = number_format($item['price'] * $item['quantity'], 2);
+
+        // Prepare purchased items for the order email
+        $email_items_list .= "<tr>
+            <td style='padding:8px; border:1px solid #ddd;'>{$item['product_name']}</td>
+            <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>
+            <td style='padding:8px; border:1px solid #ddd;'>\${$item['price']}</td>
+            <td style='padding:8px; border:1px solid #ddd;'>\${$item_subtotal}</td>
+        </tr>";
+    }
+
+    // Redirect after successful order creation
+    header("Location: cart.php?payment=success&order_id=" . $order_id);
+    exit();
+
+} else {
+
+    header("Location: cart.php?payment=error&msg=Database+Error");
+    exit();
+}
