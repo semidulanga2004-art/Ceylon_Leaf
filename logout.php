@@ -1,7 +1,11 @@
 <?php
-session_start();
-session_unset(); //removes all variables stored in the current session
-session_destroy(); // destroys current session on the server
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+session_unset();
+session_destroy();
+
 header("Location: index.php");
 exit();
 ?>
