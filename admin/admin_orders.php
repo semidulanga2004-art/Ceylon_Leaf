@@ -60,6 +60,39 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                             📞 Phone: <?php echo htmlspecialchars($order['telephone']); ?><br>
                             📍 Address: <?php echo htmlspecialchars($order['address']); ?>
                         </div>
+
+                        <!-- Ordered Items Table -->
+                        <strong>Purchased Items:</strong>
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $order_id = $order['order_id'];
+                                $items_sql = "SELECT product_name, quantity, price FROM order_items WHERE order_id = ?";
+                                $stmt = $pdo->prepare($items_sql);
+                                $stmt->execute([$order_id]);
+
+                                while ($item = $stmt->fetch(PDO::FETCH_ASSOC)):
+                                    $subtotal = $item['price'] * $item['quantity'];
+                                ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($item['product_name']); ?></td>
+                                        <td><?php echo $item['quantity']; ?></td>
+                                        <td>$<?php echo number_format($item['price'], 2); ?></td>
+                                        <td>$<?php echo number_format($subtotal, 2); ?></td>
+                                    </tr>
+                                <?php
+                                endwhile;
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             <?php

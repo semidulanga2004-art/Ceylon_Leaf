@@ -24,25 +24,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
             $dest_path = $uploadFileDir . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $stmt = $conn->prepare(
+                $stmt = $pdo->prepare(
                     "INSERT INTO products (name, image_url, price, description)
                      VALUES (?, ?, ?, ?)"
                 );
-                $stmt->bind_param(
-                    "ssds",
+
+                $inserted = $stmt->execute([
                     $name,
                     $dest_path,
                     $price,
                     $description
-                );
+                ]);
 
-                if ($stmt->execute()) {
+                if ($inserted) {
                     $message = "Tea product added successfully!";
                 } else {
                     $error = "Database insertion failed.";
                 }
-
-                $stmt->close();
             } else {
                 $error = "Error moving uploaded file to destination directory.";
             }
