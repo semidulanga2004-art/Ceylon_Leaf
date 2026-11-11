@@ -31,3 +31,32 @@ if ($product_id <= 0 || $quantity <= 0) {
 }
 
 
+// Check if item already exists in user's cart
+$stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?");
+$stmt->execute([$user_id, $product_id]);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($row) {
+
+    // Update quantity if product already exists
+    $new_qty = $row['quantity'] + $quantity;
+
+    $update_stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
+
+    if ($update_stmt->execute([$new_qty, $row['id']])) {
+        echo json_encode(['status' => 'success', 'message' => 'Cart updated successfully!']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to update cart in database.']);
+    }
+
+} else {
+
+    // Insert a new product into the cart
+    $insert_stmt = $conn->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+
+    if ($insert_stmt->execute([$user_id, $product_id, $quantity])) {
+        echo json_encode(['status' => 'success', 'message' => 'Item added to cart!']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to insert item into cart.']);
+    }
+}
