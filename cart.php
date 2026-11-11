@@ -62,3 +62,78 @@ $cart_items = $stmt->get_result();
 
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shopping Cart - CeylonLeaf</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <?php include 'navbar.php'; ?>
+
+    <div class="cart-container">
+        <h1 class="cart-title">Your Shopping Cart</h1>
+
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-<?php echo $message_type; ?>"><?php echo $message; ?></div>
+        <?php endif; ?>
+
+        <?php if ($cart_items->num_rows > 0): ?>
+            <div class="cart-layout">
+                <!-- Cart Items Table -->
+                <div class="cart-items-card">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="select-all" checked></th>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($item = $cart_items->fetch_assoc()): 
+                                $subtotal = $item['price'] * $item['quantity'];
+                            ?>
+                                <tr class="cart-item-row">
+                                    <td>
+                                        <input type="checkbox" class="item-checkbox" checked 
+                                               data-price="<?php echo $item['price']; ?>" 
+                                               data-cart-id="<?php echo $item['cart_id']; ?>">
+                                    </td>
+                                    <td class="product-info-cell">
+                                        <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="Tea Image">
+                                        <span><strong><?php echo htmlspecialchars($item['name']); ?></strong></span>
+                                    </td>
+                                    <td>$<?php echo number_format($item['price'], 2); ?></td>
+                                    <td>
+                                        <form action="cart.php" method="POST" class="cart-qty-form">
+                                            <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
+                                            <input type="number" name="quantity" class="cart-qty-input" 
+                                                   value="<?php echo $item['quantity']; ?>" min="1" onchange="this.form.submit()">
+                                            <input type="hidden" name="update_cart" value="1">
+                                        </form>
+                                    </td>
+                                    <td class="item-subtotal">$<span class="subtotal-val"><?php echo number_format($subtotal, 2); ?></span></td>
+                                    <td>
+                                        <a href="cart.php?remove=<?php echo $item['cart_id']; ?>" 
+                                           class="btn-delete" 
+                                           onclick="return confirm('Remove item from cart?');">Remove</a>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+</body>                
+</html>
+
+
+                
