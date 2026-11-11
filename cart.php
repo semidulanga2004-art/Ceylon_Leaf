@@ -157,7 +157,28 @@ $cart_items = $stmt->get_result();
                 <a href="index.php#category" class="auth-btn" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">Browse Products</a>
             </div>
         <?php endif; ?>
-    </div>        
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+    document.getElementById('checkout-form')?.addEventListener('submit', function(e) {
+        const container = document.getElementById('hidden-cart-inputs');
+        container.innerHTML = '';
+        
+        document.querySelectorAll('.item-checkbox:checked').forEach(cb => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'selected_items[]'; // Matches checkout.php expectation
+            input.value = cb.getAttribute('data-cart-id');
+            container.appendChild(input);
+        });
+
+        if (container.children.length === 0) {
+            e.preventDefault();
+            alert('Please select at least one item to checkout.');
+        }
+    });
+    </script>
 
 </body>                
 </html>
