@@ -49,5 +49,16 @@ if (isset($_GET['remove'])) {
     $del_stmt->close();
 }
 
+//product details fetch karanawa 
+$sql = "SELECT c.id AS cart_id, c.quantity, p.id AS product_id, p.name, p.price, p.image_url 
+        FROM cart c 
+        JOIN products p ON c.product_id = p.id 
+        WHERE c.user_id = ? ORDER BY c.id DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$cart_items = $stmt->get_result();        
+
 
 ?>
