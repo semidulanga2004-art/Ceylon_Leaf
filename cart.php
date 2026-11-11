@@ -132,6 +132,26 @@ $cart_items = $stmt->get_result();
                     </table>
                 </div>
 
+                //creating the summury box
+                <div class="cart-summary-card">
+                    <h2>Order Summary</h2>
+                    <div class="summary-line">
+                        <span>Selected Items:</span>
+                        <span id="selected-count">0</span>
+                    </div>
+                    <hr>
+                    <div class="summary-line total-line">
+                        <span>Total to Pay:</span>
+                        <span id="total-amount">$0.00</span>
+                    </div>
+                    
+                    <form action="checkout.php" method="POST" id="checkout-form">
+                        <div id="hidden-cart-inputs"></div>
+                        <button type="submit" id="checkout-btn" class="auth-btn">Proceed to Buy</button>
+                    </form>
+                </div>
+            </div>    
+
 </body>                
 </html>
 
