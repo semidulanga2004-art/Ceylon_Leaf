@@ -150,7 +150,14 @@ $cart_items = $stmt->get_result();
                         <button type="submit" id="checkout-btn" class="auth-btn">Proceed to Buy</button>
                     </form>
                 </div>
-            </div>    
+            </div>
+        <?php else: ?>
+            <div class="empty-cart">
+                <p>Your cart is currently empty.</p>
+                <a href="index.php#category" class="auth-btn" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">Browse Products</a>
+            </div>
+        <?php endif; ?>
+    </div>        
 
 </body>                
 </html>
