@@ -7,6 +7,18 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit();
 }
+
+// Handle Status Update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
+    $order_id_to_update = intval($_POST['order_id']);
+    $new_status = $_POST['status'];
+
+    $allowed_statuses = ['Not Packed', 'Packed', 'Delivered'];
+    if (in_array($new_status, $allowed_statuses)) {
+        $up_stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
+        $up_stmt->execute([$new_status, $order_id_to_update]);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +59,17 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <strong style="color: #2c5e1a; font-size: 16px;">Total: $<?php echo number_format($order['total_amount'], 2); ?></strong>
-                            <span>Status: <?php echo htmlspecialchars($order['status']); ?></span>
+
+                            <!-- Status Update Form -->
+                            <form action="admin_orders.php" method="POST">
+                                <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                <input type="hidden" name="update_status" value="1">
+                                <select name="status" class="status-select" onchange="this.form.submit()">
+                                    <option value="Not Packed" <?php if ($order['status'] === 'Not Packed') echo 'selected'; ?>>📦 Not Packed</option>
+                                    <option value="Packed" <?php if ($order['status'] === 'Packed') echo 'selected'; ?>>📋 Packed</option>
+                                    <option value="Delivered" <?php if ($order['status'] === 'Delivered') echo 'selected'; ?>>🚚 Delivered</option>
+                                </select>
+                            </form>
                         </div>
                     </div>
 
