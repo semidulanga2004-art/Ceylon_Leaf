@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -11,6 +10,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 $user_id = $_SESSION['user_id'];
+$orders = [];
+$error_message = '';
+
+try {
+    $stmt = $pdo->prepare(
+        "SELECT id, bill_number, total_amount, payment_method, created_at, status
+         FROM orders
+         WHERE user_id = ?
+         ORDER BY created_at DESC"
+    );
+    $stmt->execute([$user_id]);
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $error_message = "Unable to load purchase history at the moment.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +42,16 @@ $user_id = $_SESSION['user_id'];
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <main class="history-container">
-
         <h1>My Purchase History</h1>
-
         <p>View your previous purchases and invoices here.</p>
 
+        <?php if (!empty($error_message)): ?>
+            <p class="error-msg"><?php echo htmlspecialchars($error_message); ?></p>
+        <?php elseif (empty($orders)): ?>
+            <p>You have no previous purchases yet.</p>
+        <?php else: ?>
+            <p>Found <?php echo count($orders); ?> order(s) for your account.</p>
+        <?php endif; ?>
     </main>
 
     <?php include __DIR__ . '/components/footer.php'; ?>
