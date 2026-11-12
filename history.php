@@ -35,6 +35,171 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purchase History - CeylonLeaf</title>
     <link rel="stylesheet" href="style1.css">
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #333;
+        }
+
+        .history-container {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 60vh;
+        }
+
+        .history-header {
+            margin-bottom: 24px;
+        }
+
+        .history-header h1 {
+            color: #2c5e1a;
+            margin: 0 0 6px 0;
+            font-size: 28px;
+        }
+
+        .history-header p {
+            color: #666;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .history-card {
+            background: #ffffff;
+            border: 1px solid #e1e4e8;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .history-table th {
+            background-color: #2c5e1a;
+            color: #ffffff;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .history-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .history-table tbody tr:hover {
+            background-color: #f9fbf8;
+        }
+
+        .bill-no {
+            font-weight: bold;
+            color: #2c5e1a;
+        }
+
+        .amount-cell {
+            font-weight: bold;
+            color: #222;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-not-packed {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-packed {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-delivered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .btn-invoice {
+            background-color: #2c5e1a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-invoice:hover {
+            background-color: #1e3f11;
+        }
+
+        .empty-state {
+            background: #ffffff;
+            border: 1px solid #e1e4e8;
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-state h2 {
+            color: #2c5e1a;
+            margin: 0 0 10px 0;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin: 0 0 22px 0;
+            font-size: 15px;
+        }
+
+        .btn-shop-now {
+            background-color: #2c5e1a;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-shop-now:hover {
+            background-color: #1e3f11;
+        }
+
+        .error-banner {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,15 +207,74 @@ try {
     <?php include __DIR__ . '/components/navbar.php'; ?>
 
     <main class="history-container">
-        <h1>My Purchase History</h1>
-        <p>View your previous purchases and invoices here.</p>
+        <div class="history-header">
+            <h1>My Purchase History</h1>
+            <p>Track your CeylonLeaf tea orders and view your official invoices.</p>
+        </div>
 
         <?php if (!empty($error_message)): ?>
-            <p class="error-msg"><?php echo htmlspecialchars($error_message); ?></p>
+            <div class="error-banner">
+                <?php echo htmlspecialchars($error_message); ?>
+            </div>
         <?php elseif (empty($orders)): ?>
-            <p>You have no previous purchases yet.</p>
+            <div class="empty-state">
+                <h2>No Purchases Yet</h2>
+                <p>You haven't placed any tea orders yet. Explore our fresh Ceylon tea collection to get started!</p>
+                <a href="index.php" class="btn-shop-now">Shop Now</a>
+            </div>
         <?php else: ?>
-            <p>Found <?php echo count($orders); ?> order(s) for your account.</p>
+            <div class="history-card">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Bill Number</th>
+                            <th>Order Date &amp; Time</th>
+                            <th>Total Amount</th>
+                            <th>Payment Method</th>
+                            <th>Order Status</th>
+                            <th>Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($orders as $order):
+                            $bill_display = !empty($order['bill_number'])
+                                ? $order['bill_number']
+                                : '#INV-' . $order['id'];
+
+                            $payment_display = !empty($order['payment_method'])
+                                ? $order['payment_method']
+                                : 'Card / Online';
+
+                            $status_raw = $order['status'] ?? 'Not Packed';
+                            $status_class = 'status-not-packed';
+                            if ($status_raw === 'Packed') {
+                                $status_class = 'status-packed';
+                            } elseif ($status_raw === 'Delivered') {
+                                $status_class = 'status-delivered';
+                            }
+                        ?>
+                            <tr>
+                                <td class="bill-no"><?php echo htmlspecialchars($bill_display); ?></td>
+                                <td><?php echo date('M d, Y h:i A', strtotime($order['created_at'])); ?></td>
+                                <td class="amount-cell">$<?php echo number_format((float)$order['total_amount'], 2); ?></td>
+                                <td><?php echo htmlspecialchars($payment_display); ?></td>
+                                <td>
+                                    <span class="status-badge <?php echo $status_class; ?>">
+                                        <?php echo htmlspecialchars($status_raw); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn-invoice view-invoice-btn"
+                                            data-order-id="<?php echo (int)$order['id']; ?>">
+                                        View Invoice
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php endif; ?>
     </main>
 
