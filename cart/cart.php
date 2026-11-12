@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db_connect.php';
+include '../database/db_connect.php';
 
 // Protect page (login required)
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
+    header("Location: ../login/login.php");
     exit();
 }
 
@@ -30,35 +30,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_cart'])) {
     $cart_id = intval($_POST['cart_id']);
     $new_qty = intval($_POST['quantity']);
     if ($new_qty > 0) {
-        $up_stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND user_id = ?");
-        $up_stmt->bind_param("iii", $new_qty, $cart_id, $user_id);
-        $up_stmt->execute();
-        $up_stmt->close();
+        $up_stmt = $pdo->prepare("UPDATE cart SET quantity = :quantity WHERE id = :cart_id AND user_id = :user_id");
+        $up_stmt->execute([
+            ':quantity' => $new_qty,
+            ':cart_id' => $cart_id,
+            ':user_id' => $user_id,
+        ]);
     }
 }
 
 // delete karana dewal handle karanwa
 if (isset($_GET['remove'])) {
     $cart_id = intval($_GET['remove']);
-    $del_stmt = $conn->prepare("DELETE FROM cart WHERE id = ? AND user_id = ?");
-    $del_stmt->bind_param("ii", $cart_id, $user_id);
-    if ($del_stmt->execute()) {
+    $del_stmt = $pdo->prepare("DELETE FROM cart WHERE id = :cart_id AND user_id = :user_id");
+    if ($del_stmt->execute([':cart_id' => $cart_id, ':user_id' => $user_id])) {
         $message = "Item removed from cart.";
         $message_type = "success";
     }
-    $del_stmt->close();
 }
 
 //product details fetch karanawa 
 $sql = "SELECT c.id AS cart_id, c.quantity, p.id AS product_id, p.name, p.price, p.image_url 
         FROM cart c 
         JOIN products p ON c.product_id = p.id 
-        WHERE c.user_id = ? ORDER BY c.id DESC";
+        WHERE c.user_id = :user_id ORDER BY c.id DESC";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$cart_items = $stmt->get_result();        
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':user_id' => $user_id]);
+$cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -73,7 +72,7 @@ $cart_items = $stmt->get_result();
 </head>
 <body>
 
-    <?php include 'navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
     <div class="cart-container">
         <h1 class="cart-title">Your Shopping Cart</h1>
@@ -82,7 +81,7 @@ $cart_items = $stmt->get_result();
             <div class="alert alert-<?php echo $message_type; ?>"><?php echo $message; ?></div>
         <?php endif; ?>
 
-        <?php if ($cart_items->num_rows > 0): ?>
+        <?php if (!empty($cart_items)): ?>
             <div class="cart-layout">
                 <!-- Cart Items Table -->
                 <div class="cart-items-card">
@@ -98,7 +97,7 @@ $cart_items = $stmt->get_result();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($item = $cart_items->fetch_assoc()): 
+                            <?php foreach ($cart_items as $item): 
                                 $subtotal = $item['price'] * $item['quantity'];
                             ?>
                                 <tr class="cart-item-row">
@@ -127,7 +126,7 @@ $cart_items = $stmt->get_result();
                                            onclick="return confirm('Remove item from cart?');">Remove</a>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
