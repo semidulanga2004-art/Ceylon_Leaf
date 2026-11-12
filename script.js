@@ -204,3 +204,139 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
     
+
+
+// ==========================================
+// PRODUCT MODAL & QUANTITY CONTROLS
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ------------------------------
+    // 1. PRODUCT MODAL POPUP
+    // ------------------------------
+
+    // Get the modal elements from the HTML.
+    const modal = document.getElementById("productModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeBtn = document.querySelector(".close-btn");
+
+    // Find all product cards.
+    document.querySelectorAll('.product-card').forEach(card => {
+
+        // Open the modal when a product card is clicked.
+        card.addEventListener('click', function () {
+
+            // Get the product title.
+            const title = this.querySelector('h3')
+                ? this.querySelector('h3').innerText
+                : '';
+
+            // Get the product description.
+            const desc = this.getAttribute('data-description') || '';
+
+            // Check that all required modal elements exist.
+            if (modal && modalTitle && modalDescription) {
+
+                // Display the product information.
+                modalTitle.innerText = title;
+                modalDescription.innerText = desc;
+
+                // Show the modal.
+                modal.style.display = "flex";
+            }
+        });
+    });
+
+    // Close the modal when the close button is clicked.
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+    }
+
+    // Close the modal when the user clicks outside its content.
+    window.addEventListener('click', (e) => {
+        if (modal && e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+
+    // ------------------------------
+    // 2. QUANTITY INCREASE / DECREASE
+    // ------------------------------
+
+    // Find all quantity buttons.
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+
+        btn.addEventListener('click', function (e) {
+
+            // Prevent the product modal from opening.
+            e.stopPropagation();
+
+            // Check whether this is the plus button.
+            const isPlus = this.classList.contains('plus');
+
+            // Find the quantity input in the same container.
+            const input = this.parentElement.querySelector('.qty-input');
+
+            // Stop if the input does not exist.
+            if (!input) return;
+
+            // Get the current quantity.
+            let val = parseInt(input.value) || 1;
+
+            // Increase or decrease the quantity.
+            if (isPlus) {
+                input.value = val + 1;
+            } else if (val > 1) {
+                input.value = val - 1;
+            }
+        });
+    });
+
+
+    // Prevent clicks on quantity inputs and Add to Cart buttons
+    // from opening the product modal.
+    document.querySelectorAll('.qty-input, .add-cart-btn').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+
+
+    // ------------------------------
+    // 3. ADD TO CART FALLBACK
+    // ------------------------------
+
+    // Find all Add to Cart buttons.
+    document.querySelectorAll('.add-cart-btn').forEach(button => {
+
+        // Only add an event listener if inline onclick is not present.
+        if (!button.hasAttribute('onclick')) {
+
+            button.addEventListener('click', function (e) {
+
+                // Prevent the product modal from opening.
+                e.stopPropagation();
+
+                // Find the product card.
+                const card = this.closest('.product-card');
+
+                // Get the product ID from the card.
+                const productId = card
+                    ? card.getAttribute('data-id')
+                    : null;
+
+                // Call the global Add to Cart function.
+                if (productId) {
+                    addToCart(productId, this);
+                }
+            });
+        }
+    });
+
+});
+
