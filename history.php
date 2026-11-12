@@ -199,6 +199,58 @@ try {
             border-radius: 8px;
             margin-bottom: 20px;
         }
+
+        /* Invoice Modal Overlay */
+        .invoice-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invoice-modal-overlay.active {
+            display: flex;
+        }
+
+        .invoice-modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .invoice-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
     </style>
 </head>
 
@@ -278,7 +330,56 @@ try {
         <?php endif; ?>
     </main>
 
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="invoice-modal-overlay" role="dialog" aria-modal="true">
+        <div class="invoice-modal-box">
+            <div id="invoiceModalContent">Loading invoice...</div>
+            <div class="invoice-modal-actions">
+                <button type="button" class="btn-invoice" onclick="window.print()">Print Invoice</button>
+                <button type="button" id="closeInvoiceModal" class="btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
     <?php include __DIR__ . '/components/footer.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('invoiceModal');
+            const modalContent = document.getElementById('invoiceModalContent');
+            const closeBtn = document.getElementById('closeInvoiceModal');
+            const invoiceButtons = document.querySelectorAll('.view-invoice-btn');
+
+            invoiceButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const orderId = this.getAttribute('data-order-id');
+                    modalContent.innerHTML = '<p>Loading invoice details...</p>';
+                    modal.classList.add('active');
+
+                    fetch('get_invoice.php?order_id=' + encodeURIComponent(orderId))
+                        .then(function (response) {
+                            return response.text();
+                        })
+                        .then(function (html) {
+                            modalContent.innerHTML = html;
+                        })
+                        .catch(function () {
+                            modalContent.innerHTML = '<p style="color:#721c24;">Failed to load invoice. Please try again.</p>';
+                        });
+                });
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
