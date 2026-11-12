@@ -340,3 +340,174 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+// ==========================================
+// CART SELECTION & CHECKOUT
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ------------------------------
+    // 1. GET CART ELEMENTS
+    // ------------------------------
+
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const selectAll = document.getElementById('select-all');
+    const totalAmountEl = document.getElementById('total-amount');
+    const selectedCountEl = document.getElementById('selected-count');
+
+
+    // ------------------------------
+    // 2. CALCULATE CART TOTAL
+    // ------------------------------
+
+    function calculateCartTotal() {
+
+        // Stop if the total element does not exist.
+        if (!totalAmountEl) return;
+
+        let total = 0;
+        let count = 0;
+
+        // Go through every cart item.
+        document.querySelectorAll('.cart-item-row').forEach(row => {
+
+            const checkbox = row.querySelector('.item-checkbox');
+            const subtotalEl = row.querySelector('.subtotal-val');
+
+            // Include only selected items.
+            if (checkbox && checkbox.checked && subtotalEl) {
+
+                const subtotalText = subtotalEl.innerText;
+
+                total += parseFloat(
+                    subtotalText.replace(/[^0-9.-]/g, '')
+                ) || 0;
+
+                count++;
+            }
+        });
+
+        // Display the updated total.
+        totalAmountEl.innerText = `$${total.toFixed(2)}`;
+
+        // Display the selected item count.
+        if (selectedCountEl) {
+            selectedCountEl.innerText = count;
+        }
+
+        // Update Select All checkbox state.
+        if (selectAll && checkboxes.length > 0) {
+
+            const selectedCheckboxes =
+                Array.from(checkboxes).filter(cb => cb.checked);
+
+            selectAll.checked =
+                selectedCheckboxes.length === checkboxes.length;
+
+            selectAll.indeterminate =
+                selectedCheckboxes.length > 0 &&
+                selectedCheckboxes.length < checkboxes.length;
+        }
+    }
+
+
+    // ------------------------------
+    // 3. INDIVIDUAL ITEM SELECTION
+    // ------------------------------
+
+    if (checkboxes.length > 0) {
+
+        // Calculate the total when the page first loads.
+        calculateCartTotal();
+
+        // Recalculate whenever an item is selected or deselected.
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', calculateCartTotal);
+        });
+    }
+
+
+    // ------------------------------
+    // 4. SELECT ALL ITEMS
+    // ------------------------------
+
+    if (selectAll) {
+
+        selectAll.addEventListener('change', function () {
+
+            // Apply the same selection to every cart item.
+            checkboxes.forEach(cb => {
+                cb.checked = this.checked;
+            });
+
+            // Update the total.
+            calculateCartTotal();
+        });
+    }
+
+
+    // ------------------------------
+    // 5. CHECKOUT FORM
+    // ------------------------------
+
+    const checkoutForm = document.getElementById('checkout-form');
+
+    if (checkoutForm) {
+
+        checkoutForm.addEventListener('submit', function (e) {
+
+            const container =
+                document.getElementById('hidden-inputs-container');
+
+            // Find the hidden input container.
+            if (!container) {
+                e.preventDefault();
+                alert('Checkout form is missing its hidden input container.');
+                return;
+            }
+
+            // Clear previously generated hidden inputs.
+            container.innerHTML = '';
+
+            let selectedAny = false;
+
+            // Check every cart item.
+            document.querySelectorAll('.cart-item-row').forEach(row => {
+
+                const checkbox = row.querySelector('.item-checkbox');
+
+                // Process selected items only.
+                if (checkbox && checkbox.checked) {
+
+                    selectedAny = true;
+
+                    const cartId = checkbox.getAttribute('data-cart-id');
+
+                    // Create a hidden input for the selected cart ID.
+                    if (cartId) {
+
+                        const input = document.createElement('input');
+
+                        input.type = 'hidden';
+                        input.name = 'selected_items[]';
+                        input.value = cartId;
+
+                        container.appendChild(input);
+                    }
+                }
+            });
+
+            // Stop checkout if no items were selected.
+            if (!selectedAny) {
+
+                e.preventDefault();
+
+                alert('Please select at least one item to proceed.');
+            }
+        });
+    }
+
+});
+
+
