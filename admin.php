@@ -170,3 +170,56 @@ if (isset($_GET['delete'])) {
     </form>
 </div>
 
+<div class="admin-card">
+    <h2>Manage Existing Products</h2>
+
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT * FROM products ORDER BY id DESC";
+                $products = $conn->query($sql);
+
+                if ($products->num_rows > 0) {
+                    while ($row = $products->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td><img src='" . htmlspecialchars($row['image_url']) .
+                            "' class='admin-thumb' alt='product'></td>";
+                        echo "<td><strong>" . htmlspecialchars($row['name']) .
+                            "</strong></td>";
+                        echo "<td>$" . number_format($row['price'], 2) . "</td>";
+                        echo "<td class='action-cell'>
+                                <a href='edit_product.php?id=" . $row['id'] .
+                                "' class='btn-edit'>Edit</a>
+                                <a href='admin.php?delete=" . $row['id'] .
+                                "' class='btn-delete'
+                                onclick='return confirm(\"Are you sure you want to delete this product?\");'>
+                                Delete</a>
+                              </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No products found in database.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div> <!-- closes admin-grid -->
+</div> <!-- closes admin-container -->
+
+<?php include 'footer.php'; ?>
+
+<script src="script.js"></script>
+</body>
+</html>
