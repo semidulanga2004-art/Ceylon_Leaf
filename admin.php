@@ -84,3 +84,89 @@ if (isset($_GET['delete'])) {
     $delete_stmt->close();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CeylonLeaf</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<?php include 'navbar.php'; ?>
+
+<div class="admin-container">
+    <h1 class="admin-title">Admin Dashboard</h1>
+
+    <?php if (!empty($message)): ?>
+        <div class="alert alert-success">
+            <?php echo htmlspecialchars($message); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-error">
+            <?php echo htmlspecialchars($error); ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="admin-grid">
+
+
+    <div class="admin-card">
+    <h2>Add Tea Product</h2>
+
+    <form action="admin.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Tea Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="e.g., Ceylon Silver Tips"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="image">Upload Image</label>
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price ($)</label>
+            <input
+                type="number"
+                step="0.01"
+                id="price"
+                name="price"
+                required
+                placeholder="15.00"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                rows="4"
+                required
+                placeholder="Write details about taste, origin, etc."
+            ></textarea>
+        </div>
+
+        <button type="submit" name="add_product" class="auth-btn">
+            Add Product
+        </button>
+    </form>
+</div>
+
