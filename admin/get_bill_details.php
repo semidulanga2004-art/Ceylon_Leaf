@@ -37,6 +37,7 @@ $items_stmt->execute([$order_id]);
     <p><strong>Address:</strong> <?php echo htmlspecialchars($order['address']); ?></p>
     <p><strong>Payment Method:</strong> <?php echo htmlspecialchars($order['payment_method'] ?? 'Cash on Delivery'); ?></p>
 </div>
+
 <br>
 <table class="bill-table">
     <thead>
