@@ -1,5 +1,5 @@
 
-// PART 1: ADD TO CART FUNCTIONALITY
+// ADD TO CART FUNCTIONALITY
 
 // This function runs when the customer clicks the Add to Cart button.
 function addToCart(productId, btnElement) {
@@ -62,7 +62,7 @@ function addToCart(productId, btnElement) {
 
 
 // ==========================================
-// PART 2: DOM INITIALIZATION & THEME TOGGLE
+// DOM INITIALIZATION & THEME TOGGLE
 // ==========================================
 
 // Wait until the HTML document has fully loaded.
@@ -118,3 +118,89 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+// ==========================================
+// HERO SLIDER & SCROLL ANIMATIONS
+// ==========================================
+
+// Wait until the HTML document has fully loaded.
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ------------------------------
+    // 1. HERO SLIDER
+    // ------------------------------
+
+    // Find all hero slides on the page.
+    const slides = document.querySelectorAll('.hero-slide');
+
+    // Start with the first slide.
+    let currentSlide = 0;
+
+    // Check whether hero slides exist.
+    if (slides.length > 0) {
+
+        // Show the first slide initially.
+        slides[currentSlide].classList.add('active');
+
+        // Change the slide every 5 seconds.
+        setInterval(() => {
+
+            // Hide the current slide.
+            slides[currentSlide].classList.remove('active');
+
+            // Move to the next slide.
+            currentSlide = (currentSlide + 1) % slides.length;
+
+            // Show the next slide.
+            slides[currentSlide].classList.add('active');
+
+        }, 5000);
+    }
+
+
+    // ------------------------------
+    // 2. SCROLL REVEAL ANIMATIONS
+    // ------------------------------
+
+    // Find all elements that should animate when scrolling.
+    const revealElements = document.querySelectorAll('.slide-up');
+
+    // Check whether the browser supports IntersectionObserver.
+    if ('IntersectionObserver' in window) {
+
+        // Create an observer to detect visible elements.
+        const observer = new IntersectionObserver((entries) => {
+
+            // Check each observed element.
+            entries.forEach(entry => {
+
+                // If the element enters the screen...
+                if (entry.isIntersecting) {
+
+                    // Add the visible class to start the animation.
+                    entry.target.classList.add('visible');
+
+                    // Stop observing this element after animation.
+                    observer.unobserve(entry.target);
+                }
+            });
+
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe every reveal element.
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+
+    } else {
+
+        // Show elements normally if IntersectionObserver is unsupported.
+        revealElements.forEach(element => {
+            element.classList.add('visible');
+        });
+    }
+});
+    
