@@ -117,4 +117,73 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
             </div>
         <?php endif; ?>
 
-        
+                <form
+            action="edit_product.php?id=<?php echo $id; ?>"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            <div class="form-group">
+                <label for="name">Tea Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value="<?php echo htmlspecialchars($product['name']); ?>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Current Image</label><br>
+                <img
+                    src="<?php echo htmlspecialchars($product['image_url']); ?>"
+                    class="admin-thumb"
+                    style="width: 100px; height: 100px;"
+                    alt="Current Photo"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="image">Change Image (Optional)</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price ($)</label>
+                <input
+                    type="number"
+                    step="0.01"
+                    id="price"
+                    name="price"
+                    required
+                    value="<?php echo htmlspecialchars($product['price']); ?>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    required
+                ><?php echo htmlspecialchars($product['description']); ?></textarea>
+            </div>
+
+            <button type="submit" name="update_product" class="auth-btn">
+                Save Changes
+            </button>
+
+            <a
+                href="admin.php"
+                style="display: block; margin-top: 15px; text-decoration: none; color: var(--text-color);"
+            >← Back to Admin Panel</a>
+        </form>
+    </div>
+</div>
+
+<?php include 'footer.php'; ?>
+
+<script src="script.js"></script>
+</body>
+</html>
