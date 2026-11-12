@@ -21,3 +21,15 @@ if (!$order) {
     exit('Invoice not found.');
 }
 ?>
+<div class="receipt-header">
+    <h2>CeylonLeaf Official Receipt</h2>
+    <p><strong>Bill No:</strong> <?php echo htmlspecialchars($order['bill_number'] ?? '#INV-' . $order['id']); ?></p>
+    <p><strong>Date:</strong> <?php echo date('M d, Y h:i A', strtotime($order['created_at'])); ?></p>
+</div>
+<hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+<div class="receipt-customer">
+    <p><strong>Customer:</strong> <?php echo htmlspecialchars($order['full_name']); ?></p>
+    <p><strong>Phone:</strong> <?php echo htmlspecialchars($order['telephone']); ?></p>
+    <p><strong>Address:</strong> <?php echo htmlspecialchars($order['address']); ?></p>
+    <p><strong>Payment Method:</strong> <?php echo htmlspecialchars($order['payment_method'] ?? 'Cash on Delivery'); ?></p>
+</div>
