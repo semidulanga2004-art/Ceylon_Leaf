@@ -277,3 +277,12 @@ section {
 .add-cart-btn:hover {
     background: var(--primary-hover);
 }
+
+/* Footer */
+.footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 30px 20px;
+    transition: background-color 0.3s;
+}
