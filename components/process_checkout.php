@@ -10,8 +10,8 @@ if (session_status() === PHP_SESSION_NONE) {
         <a href="index.php">CeylonLeaf</a>
     </div>
     <div class="nav-links">
-        <a href="#category">Category</a>
-        <a href="#aboutus">About Us</a>
+        <a href="../index.php/#category">Category</a>
+        <a href="../index.php/#aboutus">About Us</a>
 
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <a href="cart.php" class="cart-icon">🛒 Cart</a>

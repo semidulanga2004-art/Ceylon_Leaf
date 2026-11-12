@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include 'db_connect.php';
+include '../database/db_connect.php';
 
 $message = "";
 $error = "";

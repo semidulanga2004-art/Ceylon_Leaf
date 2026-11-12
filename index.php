@@ -11,7 +11,7 @@
 <body>
      
     <!-- Include Navbar -->
-     <?php include 'navbar.php'; ?>
+     <?php include 'components/navbar.php'; ?>
 
     <!-- Hero Section -->
 
@@ -80,7 +80,7 @@
     </section>
 
     <!-- Include Footer -->
-     <?php include 'footer.php'; ?>
+     <?php include 'components/footer.php'; ?>
 
     <!-- Popup Modal for Description -->
 

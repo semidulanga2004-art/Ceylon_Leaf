@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-require_once __DIR__ . '/database/db_connect.php';
+require_once __DIR__ . '../database/db_connect.php';
 
 // Check whether the customer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -88,42 +88,8 @@ if ($order_stmt->execute([$user_id, $grand_total, $bill_number])) {
         </tr>";
     }
 
-    // 6. Send order notification email to the owner
-    $owner_email = "your_email@gmail.com"; // Replace with owner's email
-    $subject = "New Order Received - #" . $bill_number;
 
-    // Create HTML email with customer and purchase details
-    $message = "
-    <html>
-    <body style='font-family: Arial, sans-serif;'>
-      <h2>New Order Placed! ({$bill_number})</h2>
-      <h3>Customer Details:</h3>
-      <p>
-        <strong>Name:</strong> {$user_data['full_name']}<br>
-        <strong>Email:</strong> {$user_data['email']}<br>
-        <strong>Phone:</strong> {$user_data['telephone']}<br>
-        <strong>Address:</strong> {$user_data['address']}
-      </p>
-      <h3>Purchased Items:</h3>
-      <table style='width:100%; border-collapse:collapse;' border='1'>
-        <tr style='background:#f4f4f4;'>
-            <th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th>
-        </tr>
-        {$email_items_list}
-      </table>
-      <p><strong>Total Amount Paid (incl. 10% VAT): \$" . number_format($grand_total, 2) . "</strong></p>
-    </body>
-    </html>
-    ";
-
-    // Set email headers for an HTML message
-    $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8\r\n";
-    $headers .= "From: orders@ceylonleaf.com\r\n";
-
-    @mail($owner_email, $subject, $message, $headers);
-
-    // 7. Redirect customer after successful order processing
+    // 6. Redirect customer after successful order processing
     header("Location: cart.php?payment=success&order_id=" . $order_id);
     exit();
 
