@@ -59,3 +59,62 @@ function addToCart(productId, btnElement) {
             alert('An error occurred. Check your browser console (F12) for details.');
         });
 }
+
+
+// ==========================================
+// PART 2: DOM INITIALIZATION & THEME TOGGLE
+// ==========================================
+
+// Wait until the HTML document has fully loaded.
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Find the theme toggle button in the HTML.
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Get the previously saved theme from localStorage.
+    const currentTheme = localStorage.getItem('theme');
+
+    // Apply the saved theme when the page loads.
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        // Display the sun icon when dark mode is active.
+        if (themeToggle && currentTheme === 'dark') {
+            themeToggle.textContent = '☀️';
+        }
+    }
+
+    // Check whether the theme toggle button exists.
+    if (themeToggle) {
+
+        // Listen for clicks on the theme toggle button.
+        themeToggle.addEventListener('click', () => {
+
+            // Find out which theme is currently active.
+            let activeTheme = document.documentElement.getAttribute('data-theme');
+
+            // If dark mode is active, switch to light mode.
+            if (activeTheme === 'dark') {
+
+                document.documentElement.removeAttribute('data-theme');
+
+                // Save the light theme preference.
+                localStorage.setItem('theme', 'light');
+
+                // Display the moon icon.
+                themeToggle.textContent = '🌙';
+
+            } else {
+
+                // Otherwise, activate dark mode.
+                document.documentElement.setAttribute('data-theme', 'dark');
+
+                // Save the dark theme preference.
+                localStorage.setItem('theme', 'dark');
+
+                // Display the sun icon.
+                themeToggle.textContent = '☀️';
+            }
+        });
+    }
+});
