@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/database/db_connect.php';
+require_once __DIR__ . '/../database/db_connect.php';
 
 // Check whether the customer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -256,8 +256,7 @@ try {
 
 <body>
 
-    <?php include __DIR__ . '/components/navbar.php'; ?>
-
+    <?php include __DIR__ . '/../components/navbar.php'; ?>
     <main class="history-container">
         <div class="history-header">
             <h1>My Purchase History</h1>
@@ -341,7 +340,7 @@ try {
         </div>
     </div>
 
-    <?php include __DIR__ . '/components/footer.php'; ?>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
