@@ -16,6 +16,7 @@ header('Content-Type: application/json');
 // Check if user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     echo json_encode(['status' => 'error', 'message' => 'Please log in to add items to your cart.']);
+    header("Location: ../login/login.php");
     exit();
 }
 
