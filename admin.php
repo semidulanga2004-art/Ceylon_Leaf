@@ -54,3 +54,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
     }
 }
 
+if (isset($_GET['delete'])) {
+    $id = intval($_GET['delete']);
+
+    $stmt = $conn->prepare("SELECT image_url FROM products WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        $imagePath = $row['image_url'];
+
+        if (file_exists($imagePath) && strpos($imagePath, 'uploads/') === 0) {
+            unlink($imagePath);
+        }
+    }
+
+    $stmt->close();
+
+    $delete_stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
+    $delete_stmt->bind_param("i", $id);
+
+    if ($delete_stmt->execute()) {
+        $message = "Product deleted successfully!";
+    } else {
+        $error = "Failed to delete product.";
+    }
+
+    $delete_stmt->close();
+}
+?>
