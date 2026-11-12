@@ -52,11 +52,62 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Check password confirmation
-    elseif ($password !== $confirm_password) {
+    
+elseif ($password !== $confirm_password) {
 
-        $error = "Passwords do not match!";
+    $error = "Passwords do not match!";
+
+} else {
+
+    try {
+
+        // Check whether email already exists
+        $stmt = $pdo->prepare(
+            "SELECT id FROM users WHERE email = ?"
+        );
+
+        $stmt->execute([$email]);
+
+        if ($stmt->fetch()) {
+
+            $error = "Email address is already registered!";
+
+        } else {
+
+            // Securely hash the password
+            $hashed_password = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
+
+            // Insert user details into database
+            $insert_stmt = $pdo->prepare(
+                "INSERT INTO users
+                (full_name, email, telephone, address, password)
+                VALUES (?, ?, ?, ?, ?)"
+            );
+
+            $insert_stmt->execute([
+                $full_name,
+                $email,
+                $telephone,
+                $address,
+                $hashed_password
+            ]);
+
+            $success = "Account created successfully!";
+
+        }
+
+    } catch (PDOException $e) {
+
+        error_log($e->getMessage());
+        $error = "Something went wrong. Please try again!";
 
     }
+
+}
+
 
 }
 
@@ -79,16 +130,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="auth-card">
 
-            <h2>Create Account</h2>
+            
+<h2>Create Account</h2>
 
-            <p class="auth-subtitle">Join CeylonLeaf today</p>
-            <?php if (!empty($error)): ?>
-            <div class="alert alert-error">
+<p class="auth-subtitle">Join CeylonLeaf today</p>
 
-            <?php echo htmlspecialchars($error); ?>
-            </div>
-            <?php endif; ?>
+<!-- Display error message -->
+<?php if (!empty($error)): ?>
+    <div class="alert alert-error">
+        <?php echo htmlspecialchars($error); ?>
+    </div>
+<?php endif; ?>
 
+<!-- Display success message -->
+<?php if (!empty($success)): ?>
+    <div class="alert alert-success">
+        <?php echo htmlspecialchars($success); ?>
+        <a href="login.php">Click here to login</a>
+    </div>
+<?php endif; ?>
+
+<!-- Registration form -->
             <form action="register.php" method="POST">
 
                 <div class="form-group">
