@@ -4,7 +4,7 @@ include '../database/db_connect.php';
 
 // Check if owner/admin is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
+    header("Location: ../login/login.php");
     exit();
 }
 
