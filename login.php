@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include 'db_connect.php';
+include 'database/db_connect.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -101,6 +101,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <p class="auth-subtitle">
                 Log in to your CeylonLeaf account
             </p>
+
+<?php 
+    if (!empty($error)): ?>
+    <div class="alert alert-error">
+        <?php echo htmlspecialchars($error); 
+?>
+    </div>
+        <?php 
+            endif;    
+        ?>
 
             <form action="login.php" method="POST">
 
