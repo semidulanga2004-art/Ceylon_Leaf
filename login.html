@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - CeylonLeaf</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <?php include 'navbar.php'; ?>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <h2>Welcome Back</h2>
+
+            <p class="auth-subtitle">
+                Log in to your CeylonLeaf account
+            </p>
+
+            <form action="login.php" method="POST">
+
+                <div class="form-group">
+
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="Enter your email"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        placeholder="Enter your password"
+                    >
+
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    Don't have an account?
+                    <a href="register.php">Register here</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <?php include 'footer.php'; ?>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
