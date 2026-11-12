@@ -22,3 +22,66 @@ if (!$product) {
     header("Location: admin.php");
     exit();
 }
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
+    $name = trim($_POST['name']);
+    $price = trim($_POST['price']);
+    $description = trim($_POST['description']);
+    $image_url = $product['image_url'];
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['image']['tmp_name'];
+        $fileName = $_FILES['image']['name'];
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (in_array($fileExtension, $allowedExtensions)) {
+            $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
+            $dest_path = 'uploads/' . $newFileName;
+
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                if (
+                    file_exists($product['image_url']) &&
+                    strpos($product['image_url'], 'uploads/') === 0
+                ) {
+                    unlink($product['image_url']);
+                }
+
+                $image_url = $dest_path;
+            }
+        } else {
+            $error = "Invalid image file format!";
+        }
+    }
+
+    if (empty($error)) {
+        $update_stmt = $conn->prepare(
+            "UPDATE products
+             SET name = ?, image_url = ?, price = ?, description = ?
+             WHERE id = ?"
+        );
+        $update_stmt->bind_param(
+            "ssdsi",
+            $name,
+            $image_url,
+            $price,
+            $description,
+            $id
+        );
+
+        if ($update_stmt->execute()) {
+            $message = "Product updated successfully!";
+
+            $product['name'] = $name;
+            $product['image_url'] = $image_url;
+            $product['price'] = $price;
+            $product['description'] = $description;
+        } else {
+            $error = "Failed to update product.";
+        }
+
+        $update_stmt->close();
+    }
+}
+?>
+
