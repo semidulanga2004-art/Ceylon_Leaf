@@ -85,3 +85,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - CeylonLeaf Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<?php include 'navbar.php'; ?>
+
+<div class="auth-container">
+    <div class="auth-card" style="max-width: 550px;">
+        <h2>Edit Product</h2>
+        <p class="auth-subtitle">
+            Modify details for:
+            <?php echo htmlspecialchars($product['name']); ?>
+        </p>
+
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-success">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-error">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
+        <?php endif; ?>
+
+        
