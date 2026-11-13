@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include 'db_connect.php';
+require_once __DIR__ . '/../database/db_connect.php';
 
 // login eke status eka check karanwa
 if (!isset($_SESSION['logged_in']) ||$_SESSION['logged_in'] !== true) {
@@ -31,10 +31,10 @@ $stmt->execute($params);
 
 $subtotal = 0;
 $item_count = 0;
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $subtotal += $row['price'] * $row['quantity'];
-    $item_count += $row['quantity'];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {$subtotal += $row['price'] *$row['quantity'];
+    $item_count +=$row['quantity'];
 }
+$stmt->closeCursor();
 
 $vat =$subtotal * 0.10;
 $grand_total = $subtotal +$vat;
@@ -47,8 +47,8 @@ $grand_total = $subtotal +$vat;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout - CeylonLeaf</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style1.css">
 </head>
 <body class="checkout-body">
 
@@ -74,6 +74,6 @@ $grand_total = $subtotal +$vat;
 
 </body>
 </html>                
-
+<script src="../script.js"></script>
 
 

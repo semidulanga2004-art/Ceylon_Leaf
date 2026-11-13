@@ -110,7 +110,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="Tea Image">
                                         <span><strong><?php echo htmlspecialchars($item['name']); ?></strong></span>
                                     </td>
-                                    <td>$<?php echo number_format($item['price'], 2); ?></td>
+                                    <td>Rs.<?php echo number_format($item['price'], 2); ?></td>
                                     <td>
                                         <form action="cart.php" method="POST" class="cart-qty-form">
                                             <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">
@@ -131,7 +131,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </table>
                 </div>
 
-                //creating the summury box
+                <!-- creating the summary box -->
                 <div class="cart-summary-card">
                     <h2>Order Summary</h2>
                     <div class="summary-line">
