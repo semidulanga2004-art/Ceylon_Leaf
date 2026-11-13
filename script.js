@@ -34,7 +34,16 @@ function addToCart(productId, btnElement) {
         // Receive the response from PHP and convert it into JSON.
         .then(res => {
             console.log("Response received from server");
-            return res.json();
+            return res.text().then(responseText => {
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (error) {
+                    throw new Error(`Server returned an invalid response (HTTP ${res.status}).`);
+                }
+
+                return data;
+            });
         })
 
         // Handle the data returned by PHP.
@@ -56,7 +65,7 @@ function addToCart(productId, btnElement) {
         // Handle errors if the request fails.
         .catch(err => {
             console.error('Fetch Error:', err);
-            alert('An error occurred. Check your browser console (F12) for details.');
+            alert(err.message || 'Unable to add this item to your cart.');
         });
 }
 
@@ -179,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (entry.isIntersecting) {
 
                     // Add the visible class to start the animation.
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('show');
 
                     // Stop observing this element after animation.
                     observer.unobserve(entry.target);
@@ -199,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show elements normally if IntersectionObserver is unsupported.
         revealElements.forEach(element => {
-            element.classList.add('visible');
+            element.classList.add('show');
         });
     }
 });

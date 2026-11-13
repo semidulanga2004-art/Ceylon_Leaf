@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once __DIR__ . '/database/db_connect.php';
+include '../database/db_connect.php';
 
 $message = "";
 $error = "";
@@ -20,22 +20,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
 
         if (in_array($fileExtension, $allowedExtensions)) {
             $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
-            $uploadFileDir = 'uploads/';
-            $dest_path = $uploadFileDir . $newFileName;
+            $uploadDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'others'
+                . DIRECTORY_SEPARATOR . 'uploads';
+            $uploadUrlBase = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\')
+                . '/others/uploads/';
 
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                $stmt = $pdo->prepare(
-                    "INSERT INTO products (name, image_url, price, description)
-                     VALUES (?, ?, ?, ?)"
-                );
-
-                if ($stmt->execute([$name, $dest_path, $price, $description])) {
-                    $message = "Tea product added successfully!";
-                } else {
-                    $error = "Database insertion failed.";
-                }
+            if (
+                !is_dir($uploadDirectory) &&
+                !mkdir($uploadDirectory, 0775, true) &&
+                !is_dir($uploadDirectory)
+            ) {
+                $error = "Unable to create the product image upload directory.";
             } else {
-                $error = "Error moving uploaded file to destination directory.";
+                $destinationPath = $uploadDirectory . DIRECTORY_SEPARATOR . $newFileName;
+
+                if (move_uploaded_file($fileTmpPath, $destinationPath)) {
+                    $imageUrl = $uploadUrlBase . $newFileName;
+                    $stmt = $pdo->prepare(
+                        "INSERT INTO products (name, image_url, price, description)
+                         VALUES (?, ?, ?, ?)"
+                    );
+
+                    if ($stmt->execute([$name, $imageUrl, $price, $description])) {
+                        $message = "Tea product added successfully!";
+                    } else {
+                        $error = "Database insertion failed.";
+                    }
+                } else {
+                    $error = "Error moving uploaded file to destination directory.";
+                }
             }
         } else {
             $error = "Upload failed. Allowed image formats: jpg, jpeg, png, webp.";
@@ -54,9 +67,17 @@ if (isset($_GET['delete'])) {
 
     if ($row) {
         $imagePath = $row['image_url'];
+        $uploadUrlBase = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\')
+            . '/others/uploads/';
 
-        if (file_exists($imagePath) && strpos($imagePath, 'uploads/') === 0) {
-            unlink($imagePath);
+        if (strpos($imagePath, $uploadUrlBase) === 0) {
+            $uploadedFilePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'others'
+                . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR
+                . basename($imagePath);
+
+            if (is_file($uploadedFilePath)) {
+                unlink($uploadedFilePath);
+            }
         }
     }
 
@@ -76,11 +97,11 @@ if (isset($_GET['delete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - CeylonLeaf</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<?php include 'navbar.php'; ?>
+<?php include '../components/navbar.php'; ?>
 
 <div class="admin-container">
     <h1 class="admin-title">Admin Dashboard</h1>
@@ -127,7 +148,7 @@ if (isset($_GET['delete'])) {
         </div>
 
         <div class="form-group">
-            <label for="price">Price ($)</label>
+            <label for="price">Price (Rs.)</label>
             <input
                 type="number"
                 step="0.01"
@@ -203,8 +224,8 @@ if (isset($_GET['delete'])) {
 </div> <!-- closes admin-grid -->
 </div> <!-- closes admin-container -->
 
-<?php include 'footer.php'; ?>
+<?php include '../components/footer.php'; ?>
 
-<script src="script.js"></script>
+<script src="../script.js"></script>
 </body>
 </html>

@@ -79,13 +79,7 @@ if ($order_stmt->execute([$user_id, $grand_total, $bill_number])) {
 
         $item_subtotal = number_format($item['price'] * $item['quantity'], 2);
 
-        // Prepare purchased items for the order email
-        $email_items_list .= "<tr>
-            <td style='padding:8px; border:1px solid #ddd;'>{$item['product_name']}</td>
-            <td style='padding:8px; border:1px solid #ddd;'>{$item['quantity']}</td>
-            <td style='padding:8px; border:1px solid #ddd;'>\${$item['price']}</td>
-            <td style='padding:8px; border:1px solid #ddd;'>\${$item_subtotal}</td>
-        </tr>";
+    
     }
 
 

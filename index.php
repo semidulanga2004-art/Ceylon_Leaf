@@ -47,7 +47,7 @@
                         <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                         <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                         <p class="price">
-                            $<?php echo number_format($row['price'], 2); ?>
+                            Rs.<?php echo number_format($row['price'], 2); ?>
                         </p>
 
                         <!-- Action Area: Quantity and Add to Cart -->

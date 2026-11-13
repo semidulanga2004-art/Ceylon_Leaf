@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once __DIR__ . '../database/db_connect.php';
+require_once __DIR__ . '/../database/db_connect.php';
 
 // Login status check
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {

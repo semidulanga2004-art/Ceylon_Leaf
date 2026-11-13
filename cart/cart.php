@@ -119,7 +119,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <input type="hidden" name="update_cart" value="1">
                                         </form>
                                     </td>
-                                    <td class="item-subtotal">$<span class="subtotal-val"><?php echo number_format($subtotal, 2); ?></span></td>
+                                    <td class="item-subtotal">Rs.<span class="subtotal-val"><?php echo number_format($subtotal, 2); ?></span></td>
                                     <td>
                                         <a href="cart.php?remove=<?php echo $item['cart_id']; ?>" 
                                            class="btn-delete" 
@@ -141,11 +141,11 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <hr>
                     <div class="summary-line total-line">
                         <span>Total to Pay:</span>
-                        <span id="total-amount">$0.00</span>
+                        <span id="total-amount">Rs.0.00</span>
                     </div>
                     
                     <form action="checkout.php" method="POST" id="checkout-form">
-                        <div id="hidden-cart-inputs"></div>
+                        <div id="hidden-inputs-container"></div>
                         <button type="submit" id="checkout-btn" class="auth-btn">Proceed to Buy</button>
                     </form>
                 </div>
@@ -159,25 +159,6 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     
     <script src="../script.js"></script>
-    <script>
-    document.getElementById('checkout-form')?.addEventListener('submit', function(e) {
-        const container = document.getElementById('hidden-cart-inputs');
-        container.innerHTML = '';
-        
-        document.querySelectorAll('.item-checkbox:checked').forEach(cb => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'selected_items[]'; // Matches checkout.php expectation
-            input.value = cb.getAttribute('data-cart-id');
-            container.appendChild(input);
-        });
-
-        if (container.children.length === 0) {
-            e.preventDefault();
-            alert('Please select at least one item to checkout.');
-        }
-    });
-    </script>
 
 </body>                
 </html>
