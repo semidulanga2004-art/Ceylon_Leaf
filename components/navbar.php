@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <nav class="navbar">
     <div class="logo">
-        <a href="/index.php">CeylonLeaf</a>
+        <a href="/ceylon_leaf/index.php">CeylonLeaf</a>
     </div>
     <div class="nav-links">
         <a href="#category">Category</a>
@@ -15,10 +15,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <!-- Check whether the user is logged in -->
-            <a href="/cart/cart.php" class="cart-icon">🛒 Cart</a>
-            <a href="/history/history.php">Buying History</a>
+            <a href="/ceylon_leaf/cart/cart.php" class="cart-icon">🛒 Cart</a>
+            <a href="/ceylon_leaf/history/history.php">Buying History</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
-            <a href="/components/logout.php" class="btn-login">Logout</a>
+            <a href="/ceylon_leaf/components/logout.php" class="btn-login">Logout</a>
 
         <?php else: ?> <!If the user has not logged in it shows the below navigation links
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once __DIR__ . '../database/db_connect.php';
+require_once __DIR__ . '/ceylon_leaf/database/db_connect.php';
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_GET['order_id'])) {
     exit('Unauthorized access.');

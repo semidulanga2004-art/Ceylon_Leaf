@@ -68,7 +68,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Shopping Cart - CeylonLeaf</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -153,12 +153,12 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php else: ?>
             <div class="empty-cart">
                 <p>Your cart is currently empty.</p>
-                <a href="index.php#category" class="auth-btn" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">Browse Products</a>
+                <a href="../index.php#category" class="auth-btn" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">Browse Products</a>
             </div>
         <?php endif; ?>
     </div>
     
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
     <script>
     document.getElementById('checkout-form')?.addEventListener('submit', function(e) {
         const container = document.getElementById('hidden-cart-inputs');
