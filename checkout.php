@@ -72,6 +72,38 @@ $grand_total = $subtotal +$vat;
                 </div>
                 <p class="form-hint">Enter your payment information to authorize the order</p>
 
+                <form action="process_payment.php" method="POST">
+                    <!-- Selected Cart Item Hidden Inputs -->
+                    <?php foreach ($selected_cart_ids as$cart_id): ?>
+                        <input type="hidden" name="selected_items[]" value="<?php echo htmlspecialchars($cart_id); ?>">
+                    <?php endforeach; ?>
+                    <input type="hidden" name="grand_total" value="<?php echo $grand_total; ?>">
+
+                    <div class="form-group-custom">
+                        <label for="cardholder">Cardholder Name</label>
+                        <input type="text" id="cardholder" name="cardholder" required placeholder="Name on card" value="<?php echo htmlspecialchars($user_name); ?>">
+                    </div>
+
+                    <div class="card-input-box">
+                        <span class="card-brand-logo">💳</span>
+                        <input type="text" id="cardnumber" name="cardnumber" required maxlength="19" placeholder="4356 - 7890 - 1234 - 5678">
+                        <span class="checked-icon">✔</span>
+                    </div>
+
+                    <div class="form-row-dual">
+                        <div class="form-group-custom">
+                            <label for="expiry">Expiry Date (MM/YY)</label>
+                            <input type="text" id="expiry" name="expiry" required placeholder="10/26" maxlength="5">
+                        </div>
+                        <div class="form-group-custom">
+                            <label for="cvv">CVV / CVC</label>
+                            <input type="password" id="cvv" name="cvv" required placeholder="446" maxlength="4">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-btn">Authorize & Pay $<?php echo number_format($grand_total, 2); ?></button>
+                </form>
+
 </body>
 </html>                
 
