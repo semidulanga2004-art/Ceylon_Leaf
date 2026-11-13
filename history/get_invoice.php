@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../database/db_connect.php';
+require_once __DIR__ . '../database/db_connect.php';
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_GET['order_id'])) {
     exit('Unauthorized access.');
@@ -89,6 +89,6 @@ $status_display = !empty($order['status']) ? $order['status'] : 'Not Packed';
     </table>
 
     <div style="text-align:right; margin-top:16px; font-size:16px;">
-        <strong>Total Amount: <span style="color:#2c5e1a;">$<?php echo number_format((float)$order['total_amount'], 2); ?></span></strong>
+        <strong>Total Amount: <span style="color: #2c5e1a;">$<?php echo number_format((float)$order['total_amount'], 2); ?></span></strong>
     </div>
 </div>

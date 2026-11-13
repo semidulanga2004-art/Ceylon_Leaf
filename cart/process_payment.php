@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-require_once __DIR__ . '/../database/db_connect.php';
+require_once __DIR__ . '../database/db_connect.php';
 
 // Check whether the customer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -14,7 +14,7 @@ $selected_items = $_POST['selected_items'] ?? [];
 
 // Check whether any items are selected
 if (empty($selected_items)) {
-    header("Location: cart.php?payment=error&msg=No+items+selected");
+    header("Location: ../cart/cart.php?payment=error&msg=No+items+selected");
     exit();
 }
 
@@ -42,7 +42,7 @@ foreach ($result as $row) {
 }
 
 if (empty($items)) {
-    header("Location: cart.php?payment=error&msg=Items+not+found");
+    header("Location: ../cart/cart.php?payment=error&msg=Items+not+found");
     exit();
 }
 
@@ -90,11 +90,11 @@ if ($order_stmt->execute([$user_id, $grand_total, $bill_number])) {
 
 
     // 6. Redirect customer after successful order processing
-    header("Location: cart.php?payment=success&order_id=" . $order_id);
+    header("Location: ../cart/cart.php?payment=success&order_id=" . $order_id);
     exit();
 
 } else {
 
-    header("Location: cart.php?payment=error&msg=Database+Error");
+    header("Location: ../cart/cart.php?payment=error&msg=Database+Error");
     exit();
 }

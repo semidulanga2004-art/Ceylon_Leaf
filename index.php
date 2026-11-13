@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/database/db_connect.php'; ?>
+<?php include 'database/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -20,12 +20,12 @@
 
           <!--  First Slide: Image -->
               <div class="slide active">
-                  <img src="image1.jpg" alt="Tea Estate">
+                  <img src="others/images.jpg" alt="Tea Estate">
               </div>
 
            <!-- Second Slide: Video -->
               <div class="slide">
-                 <video src="video.mp4" autoplay muted loop></video>
+                 <video src="others/tea.mp4" autoplay muted loop></video>
               </div> 
         </div> 
     </section>

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once __DIR__ . '/../database/db_connect.php';
+require_once __DIR__ . '../database/db_connect.php';
 
 // Login status check
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -11,7 +11,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 // Item selection check
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['selected_items'])) {
-    header("Location: cart.php");
+    header("Location: ../cart/cart.php");
     exit();
 }
 

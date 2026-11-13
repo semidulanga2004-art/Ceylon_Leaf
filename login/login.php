@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-include 'database/db_connect.php';
+include '../database/db_connect.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['user_name'] = $user['full_name'];
 
-                    header("Location: index.php");
+                    header("Location: ../index.php");
                     exit();
 
                 } else {
@@ -85,12 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <title>Login - CeylonLeaf</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
-    <?php include 'navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
     <div class="auth-container">
 
@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="auth-footer">
                 <p>
                     Don't have an account?
-                    <a href="register.php">Register here</a>
+                    <a href="/ceylon_leaf/login/register.php">Register here</a>
                 </p>
             </div>
 
@@ -159,9 +159,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
 
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
 
 </body>
 </html>

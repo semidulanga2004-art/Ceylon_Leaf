@@ -2,11 +2,11 @@
 <?php
 
 session_start();
-include 'database/db_connect.php';
+include '../database/db_connect.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -121,10 +121,10 @@ elseif ($password !== $confirm_password) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Register - CeylonLeaf</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-      <?php include 'navbar.php'; ?>
+      <?php include '../components/navbar.php'; ?>
 
     <div class="auth-container">
 
@@ -146,12 +146,12 @@ elseif ($password !== $confirm_password) {
 <?php if (!empty($success)): ?>
     <div class="alert alert-success">
         <?php echo htmlspecialchars($success); ?>
-        <a href="login.php">Click here to login</a>
+        <a href="../login/login.php">Click here to login</a>
     </div>
 <?php endif; ?>
 
 <!-- Registration form -->
-            <form action="register.php" method="POST">
+            <form action="../login/register.php" method="POST">
 
                 <div class="form-group">
                     <label for="full_name">Full Name</label>
@@ -199,7 +199,7 @@ elseif ($password !== $confirm_password) {
             <div class="auth-footer">
                 <p>
                     Already have an account?
-                    <a href="login.php">Login here</a>
+                    <a href="../login/login.php">Login here</a>
                 </p>
             </div>
 
@@ -207,9 +207,9 @@ elseif ($password !== $confirm_password) {
 
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
 
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
 
 </body>
 </html> 

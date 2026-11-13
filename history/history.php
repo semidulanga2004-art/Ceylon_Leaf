@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../database/db_connect.php';
+require_once __DIR__ . '../database/db_connect.php';
 
 // Check whether the customer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
+    header("Location: ../login/login.php");
     exit();
 }
 
@@ -34,7 +34,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purchase History - CeylonLeaf</title>
-    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="../style.css">
     <style>
         body {
             background-color: #f4f6f8;
@@ -256,7 +256,7 @@ try {
 
 <body>
 
-    <?php include __DIR__ . '/../components/navbar.php'; ?>
+    <?php include __DIR__ . '../components/navbar.php'; ?>
     <main class="history-container">
         <div class="history-header">
             <h1>My Purchase History</h1>
@@ -271,7 +271,7 @@ try {
             <div class="empty-state">
                 <h2>No Purchases Yet</h2>
                 <p>You haven't placed any tea orders yet. Explore our fresh Ceylon tea collection to get started!</p>
-                <a href="index.php" class="btn-shop-now">Shop Now</a>
+                <a href="../index.php" class="btn-shop-now">Shop Now</a>
             </div>
         <?php else: ?>
             <div class="history-card">
@@ -340,7 +340,7 @@ try {
         </div>
     </div>
 
-    <?php include __DIR__ . '/../components/footer.php'; ?>
+    <?php include __DIR__ . '../components/footer.php'; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -363,7 +363,7 @@ try {
                             modalContent.innerHTML = html;
                         })
                         .catch(function () {
-                            modalContent.innerHTML = '<p style="color:#721c24;">Failed to load invoice. Please try again.</p>';
+                            modalContent.innerHTML = '<p style="color: #721c24;">Failed to load invoice. Please try again.</p>';
                         });
                 });
             });
