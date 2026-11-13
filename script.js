@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Display the updated total.
-        totalAmountEl.innerText = `$${total.toFixed(2)}`;
+        totalAmountEl.innerText = `Rs. ${total.toFixed(2)}`;
 
         // Display the selected item count.
         if (selectedCountEl) {

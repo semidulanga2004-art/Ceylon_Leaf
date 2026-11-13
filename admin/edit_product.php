@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include 'db_connect.php';
+include '../database/db_connect.php';
 
 if (!isset($_GET['id'])) {
     header("Location: admin.php");
@@ -79,11 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product - CeylonLeaf Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<?php include 'navbar.php'; ?>
+<?php include '../components/navbar.php'; ?>
 
 <div class="auth-container">
     <div class="auth-card" style="max-width: 550px;">
@@ -170,8 +170,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include '../components/footer.php'; ?>
 
-<script src="script.js"></script>
+<script src="../script.js"></script>
 </body>
 </html>

@@ -74,6 +74,6 @@ $grand_total = $subtotal +$vat;
 
 </body>
 </html>                
-
+<script src="../script.js"></script>
 
 
