@@ -39,8 +39,41 @@ $stmt->close();
 $vat =$subtotal * 0.10;
 $grand_total = $subtotal +$vat;
 
-
-
-
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - CeylonLeaf</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body class="checkout-body">
+
+    <div class="checkout-modal-container">
+        <!-- Header Bar -->
+        <div class="checkout-header">
+            <div class="checkout-brand">
+                <span class="bank-badge">COMMERCIAL BANK SECURE GATEWAY</span>
+                <span class="gateway-lock" style="margin-left: 10px;">🔒 256-bit SSL Encrypted</span>
+            </div>
+            <div class="checkout-timer" id="timer">10 : 00</div>
+            <a href="cart.php" class="close-modal">&times;</a>
+        </div>
+
+        <div class="checkout-grid">
+            <!-- Left Column: Payment Form -->
+            <div class="payment-form-section">
+                <div class="section-heading">
+                    <h3>Card Details</h3>
+                    <a href="cart.php" class="edit-link">Edit Order</a>
+                </div>
+                <p class="form-hint">Enter your payment information to authorize the order</p>
+
+</body>
+</html>                
+
+
+
