@@ -12,11 +12,9 @@ $id = intval($_GET['id']);
 $message = "";
 $error = "";
 
-$stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$product = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+$stmt = $pdo->prepare("SELECT * FROM products WHERE id = :id");
+$stmt->execute(['id' => $id]);
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$product) {
     header("Location: admin.php");
@@ -55,21 +53,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
     }
 
     if (empty($error)) {
-        $update_stmt = $conn->prepare(
+        $update_stmt = $pdo->prepare(
             "UPDATE products
              SET name = ?, image_url = ?, price = ?, description = ?
              WHERE id = ?"
         );
-        $update_stmt->bind_param(
-            "ssdsi",
-            $name,
-            $image_url,
-            $price,
-            $description,
-            $id
-        );
 
-        if ($update_stmt->execute()) {
+        if ($update_stmt->execute([$name, $image_url, $price, $description, $id])) {
             $message = "Product updated successfully!";
 
             $product['name'] = $name;
@@ -79,8 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
         } else {
             $error = "Failed to update product.";
         }
-
-        $update_stmt->close();
     }
 }
 ?>
