@@ -1,7 +1,8 @@
 <?php include 'database/db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
- <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CeylonLeaf - Premium Tea</title>
@@ -9,25 +10,25 @@
 </head>
 
 <body>
-     
+
     <!-- Include Navbar -->
-     <?php include 'components/navbar.php'; ?>
+    <?php include 'components/navbar.php'; ?>
 
     <!-- Hero Section -->
 
     <section class="hero" id="hero">
-       <div class="slider">
+        <div class="slider">
 
-          <!--  First Slide: Image -->
-              <div class="slide active">
-                  <img src="others/images.jpg" alt="Tea Estate">
-              </div>
+            <!--  First Slide: Image -->
+            <div class="slide active">
+                <img src="others/images.jpg" alt="Tea Estate">
+            </div>
 
-           <!-- Second Slide: Video -->
-              <div class="slide">
-                 <video src="others/tea.mp4" autoplay muted loop></video>
-              </div> 
-        </div> 
+            <!-- Second Slide: Video -->
+            <div class="slide">
+                <video src="others/tea.mp4" autoplay muted loop></video>
+            </div>
+        </div>
     </section>
 
     <!-- Category Section -->
@@ -71,16 +72,16 @@
         </div>
     </section>
 
-    
 
-     <!-- About Us Section -->
-      <section class="about-us" id="aboutus">
+
+    <!-- About Us Section -->
+    <section class="about-us" id="aboutus">
         <h2 class="section-title">About Us</h2>
         <p>Welcome to CeylonLeaf. This journey began from a simple thought—a <strong>semis' idea forced to start it</strong>. We are dedicated to bringing you the finest, hand-picked tea leaves directly from the lush estates of our homeland to your cup. Quality and authenticity are the core of our business.</p>
     </section>
 
     <!-- Include Footer -->
-     <?php include 'components/footer.php'; ?>
+    <?php include 'components/footer.php'; ?>
 
     <!-- Popup Modal for Description -->
 
@@ -93,7 +94,8 @@
     </div>
 
     <script src="script.js"></script>
-    
 
-</body>   
-</html> 
+
+</body>
+
+</html>

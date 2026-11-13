@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 15px;">
-                            <strong style="color: #2c5e1a; font-size: 16px;">Total: $<?php echo number_format($order['total_amount'], 2); ?></strong>
+                            <strong style="color: #2c5e1a; font-size: 16px;">Total: Rs.<?php echo number_format($order['total_amount'], 2); ?></strong>
 
                             <!-- Status Update Form -->
                             <form action="admin_orders.php" method="POST">
@@ -107,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                                     <tr>
                                         <td><?php echo htmlspecialchars($item['product_name']); ?></td>
                                         <td><?php echo $item['quantity']; ?></td>
-                                        <td>$<?php echo number_format($item['price'], 2); ?></td>
-                                        <td>$<?php echo number_format($subtotal, 2); ?></td>
+                                        <td>Rs.<?php echo number_format($item['price'], 2); ?></td>
+                                        <td>Rs.<?php echo number_format($subtotal, 2); ?></td>
                                     </tr>
                                 <?php
                                 endwhile;
@@ -128,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     </div>
 
     <?php include '../components/footer.php'; ?>
+    <script src="../script.js"></script>
 </body>
 
 </html>

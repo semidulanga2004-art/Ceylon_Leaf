@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-require_once __DIR__ . '../database/db_connect.php';
+include '../database/db_connect.php';
 
 // Check whether the customer is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -78,15 +78,12 @@ if ($order_stmt->execute([$user_id, $grand_total, $bill_number])) {
         $del_stmt->execute([$item['cart_id'], $user_id]);
 
         $item_subtotal = number_format($item['price'] * $item['quantity'], 2);
-
-    
     }
 
 
     // 6. Redirect customer after successful order processing
     header("Location: ../cart/cart.php?payment=success&order_id=" . $order_id);
     exit();
-
 } else {
 
     header("Location: ../cart/cart.php?payment=error&msg=Database+Error");

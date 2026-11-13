@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/ceylon_leaf/database/db_connect.php';
+include '../database/db_connect.php';
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_GET['order_id'])) {
     exit('Unauthorized access.');
@@ -81,14 +81,14 @@ $status_display = !empty($order['status']) ? $order['status'] : 'Not Packed';
                 <tr>
                     <td style="padding:9px 10px; border:1px solid #ddd;"><?php echo htmlspecialchars($item['product_name']); ?></td>
                     <td style="padding:9px 10px; border:1px solid #ddd;"><?php echo (int)$item['quantity']; ?></td>
-                    <td style="padding:9px 10px; border:1px solid #ddd;">$<?php echo number_format((float)$item['price'], 2); ?></td>
-                    <td style="padding:9px 10px; border:1px solid #ddd;">$<?php echo number_format($sub, 2); ?></td>
+                    <td style="padding:9px 10px; border:1px solid #ddd;">Rs.<?php echo number_format((float)$item['price'], 2); ?></td>
+                    <td style="padding:9px 10px; border:1px solid #ddd;">Rs.<?php echo number_format($sub, 2); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
     <div style="text-align:right; margin-top:16px; font-size:16px;">
-        <strong>Total Amount: <span style="color: #2c5e1a;">$<?php echo number_format((float)$order['total_amount'], 2); ?></span></strong>
+        <strong>Total Amount: <span style="color: #2c5e1a;">Rs.<?php echo number_format((float)$order['total_amount'], 2); ?></span></strong>
     </div>
 </div>

@@ -75,103 +75,100 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product - CeylonLeaf Admin</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
 
-<?php include '../components/navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
-<div class="auth-container">
-    <div class="auth-card" style="max-width: 550px;">
-        <h2>Edit Product</h2>
-        <p class="auth-subtitle">
-            Modify details for:
-            <?php echo htmlspecialchars($product['name']); ?>
-        </p>
+    <div class="auth-container">
+        <div class="auth-card" style="max-width: 550px;">
+            <h2>Edit Product</h2>
+            <p class="auth-subtitle">
+                Modify details for:
+                <?php echo htmlspecialchars($product['name']); ?>
+            </p>
 
-        <?php if (!empty($message)): ?>
-            <div class="alert alert-success">
-                <?php echo htmlspecialchars($message); ?>
-            </div>
-        <?php endif; ?>
+            <?php if (!empty($message)): ?>
+                <div class="alert alert-success">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
 
-        <?php if (!empty($error)): ?>
-            <div class="alert alert-error">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
-        <?php endif; ?>
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-error">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
 
-                <form
-            action="edit_product.php?id=<?php echo $id; ?>"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-            <div class="form-group">
-                <label for="name">Tea Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value="<?php echo htmlspecialchars($product['name']); ?>"
-                >
-            </div>
+            <form
+                action="edit_product.php?id=<?php echo $id; ?>"
+                method="POST"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Tea Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value="<?php echo htmlspecialchars($product['name']); ?>">
+                </div>
 
-            <div class="form-group">
-                <label>Current Image</label><br>
-                <img
-                    src="<?php echo htmlspecialchars($product['image_url']); ?>"
-                    class="admin-thumb"
-                    style="width: 100px; height: 100px;"
-                    alt="Current Photo"
-                >
-            </div>
+                <div class="form-group">
+                    <label>Current Image</label><br>
+                    <img
+                        src="<?php echo htmlspecialchars($product['image_url']); ?>"
+                        class="admin-thumb"
+                        style="width: 100px; height: 100px;"
+                        alt="Current Photo">
+                </div>
 
-            <div class="form-group">
-                <label for="image">Change Image (Optional)</label>
-                <input type="file" id="image" name="image" accept="image/*">
-            </div>
+                <div class="form-group">
+                    <label for="image">Change Image (Optional)</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
 
-            <div class="form-group">
-                <label for="price">Price ($)</label>
-                <input
-                    type="number"
-                    step="0.01"
-                    id="price"
-                    name="price"
-                    required
-                    value="<?php echo htmlspecialchars($product['price']); ?>"
-                >
-            </div>
+                <div class="form-group">
+                    <label for="price">Price (Rs.)</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="price"
+                        name="price"
+                        required
+                        value="<?php echo htmlspecialchars($product['price']); ?>">
+                </div>
 
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    rows="4"
-                    required
-                ><?php echo htmlspecialchars($product['description']); ?></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        required><?php echo htmlspecialchars($product['description']); ?></textarea>
+                </div>
 
-            <button type="submit" name="update_product" class="auth-btn">
-                Save Changes
-            </button>
+                <button type="submit" name="update_product" class="auth-btn">
+                    Save Changes
+                </button>
 
-            <a
-                href="admin.php"
-                style="display: block; margin-top: 15px; text-decoration: none; color: var(--text-color);"
-            >← Back to Admin Panel</a>
-        </form>
+                <a
+                    href="admin.php"
+                    style="display: block; margin-top: 15px; text-decoration: none; color: var(--text-color);">← Back to Admin Panel</a>
+            </form>
+        </div>
     </div>
-</div>
 
-<?php include '../components/footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
 
-<script src="../script.js"></script>
+    <script src="../script.js"></script>
 </body>
+
 </html>

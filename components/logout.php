@@ -8,4 +8,3 @@ session_destroy();
 
 header("Location: /ceylon_leaf/index.php");
 exit();
-?>

@@ -36,12 +36,7 @@ try {
     <title>Purchase History - CeylonLeaf</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        body {
-            background-color: #f4f6f8;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            color: #333;
-        }
+        
 
         .history-container {
             max-width: 1050px;
@@ -307,7 +302,7 @@ try {
                             <tr>
                                 <td class="bill-no"><?php echo htmlspecialchars($bill_display); ?></td>
                                 <td><?php echo date('M d, Y h:i A', strtotime($order['created_at'])); ?></td>
-                                <td class="amount-cell">$<?php echo number_format((float)$order['total_amount'], 2); ?></td>
+                                <td class="amount-cell">Rs.<?php echo number_format((float)$order['total_amount'], 2); ?></td>
                                 <td><?php echo htmlspecialchars($payment_display); ?></td>
                                 <td>
                                     <span class="status-badge <?php echo $status_class; ?>">
@@ -340,7 +335,8 @@ try {
         </div>
     </div>
 
-    <?php include '../components/footer.php'; ?>
+    
+    <script src="../script.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -379,6 +375,6 @@ try {
             });
         });
     </script>
-
+<?php include '../components/footer.php'; ?>
 </body>
 </html>

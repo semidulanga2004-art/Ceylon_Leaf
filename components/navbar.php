@@ -22,10 +22,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <?php else: ?> <!If the user has not logged in it shows the below navigation links
 
-            <!-- Day / Night Mode Toggle Button -->
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
-            <a href="/ceylon_leaf/login/login.php" class="btn-login">Login</a>
-        <?php endif; ?>
+                <!-- Day / Night Mode Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
+                <a href="/ceylon_leaf/login/login.php" class="btn-login">Login</a>
+            <?php endif; ?>
 
 
 

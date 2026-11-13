@@ -46,30 +46,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     header("Location: ../index.php");
                     exit();
-
                 } else {
 
                     $error = "Invalid password!";
-
                 }
-
             } else {
 
                 $error = "No account found with that email address!";
-
             }
-
         } catch (PDOException $e) {
 
             error_log($e->getMessage());
             $error = "Login failed. Please try again.";
-
         }
-
     } else {
 
         $error = "Please fill in all fields!";
-
     }
 }
 
@@ -102,15 +94,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 Log in to your CeylonLeaf account
             </p>
 
-<?php 
-    if (!empty($error)): ?>
-    <div class="alert alert-error">
-        <?php echo htmlspecialchars($error); 
-?>
-    </div>
-        <?php 
-            endif;    
-        ?>
+            <?php
+            if (!empty($error)): ?>
+                <div class="alert alert-error">
+                    <?php echo htmlspecialchars($error);
+                    ?>
+                </div>
+            <?php
+            endif;
+            ?>
 
             <form action="login.php" method="POST">
 
@@ -123,8 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         id="email"
                         name="email"
                         required
-                        placeholder="Enter your email"
-                    >
+                        placeholder="Enter your email">
 
                 </div>
 
@@ -137,8 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         id="password"
                         name="password"
                         required
-                        placeholder="Enter your password"
-                    >
+                        placeholder="Enter your password">
 
                 </div>
 
@@ -164,4 +154,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="../script.js"></script>
 
 </body>
+
 </html>

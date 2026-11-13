@@ -93,139 +93,138 @@ if (isset($_GET['delete'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - CeylonLeaf</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
 
-<?php include '../components/navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
-<div class="admin-container">
-    <h1 class="admin-title">Admin Dashboard</h1>
+    <div class="admin-container">
+        <h1 class="admin-title">Admin Dashboard</h1>
 
-    <?php if (!empty($message)): ?>
-        <div class="alert alert-success">
-            <?php echo htmlspecialchars($message); ?>
-        </div>
-    <?php endif; ?>
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-success">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
 
-    <?php if (!empty($error)): ?>
-        <div class="alert alert-error">
-            <?php echo htmlspecialchars($error); ?>
-        </div>
-    <?php endif; ?>
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-error">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
+        <?php endif; ?>
 
-    <div class="admin-grid">
+        <div class="admin-grid">
 
 
-    <div class="admin-card">
-    <h2>Add Tea Product</h2>
+            <div class="admin-card">
+                <h2>Add Tea Product</h2>
 
-    <form action="admin.php" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="name">Tea Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                placeholder="e.g., Ceylon Silver Tips"
-            >
-        </div>
+                <form action="admin.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Tea Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            placeholder="e.g., Ceylon Silver Tips">
+                    </div>
 
-        <div class="form-group">
-            <label for="image">Upload Image</label>
-            <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-                required
-            >
-        </div>
+                    <div class="form-group">
+                        <label for="image">Upload Image</label>
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*"
+                            required>
+                    </div>
 
-        <div class="form-group">
-            <label for="price">Price (Rs.)</label>
-            <input
-                type="number"
-                step="0.01"
-                id="price"
-                name="price"
-                required
-                placeholder="15.00"
-            >
-        </div>
+                    <div class="form-group">
+                        <label for="price">Price (Rs.)</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            id="price"
+                            name="price"
+                            required
+                            placeholder="15.00">
+                    </div>
 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea
-                id="description"
-                name="description"
-                rows="4"
-                required
-                placeholder="Write details about taste, origin, etc."
-            ></textarea>
-        </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="4"
+                            required
+                            placeholder="Write details about taste, origin, etc."></textarea>
+                    </div>
 
-        <button type="submit" name="add_product" class="auth-btn">
-            Add Product
-        </button>
-    </form>
-</div>
+                    <button type="submit" name="add_product" class="auth-btn">
+                        Add Product
+                    </button>
+                </form>
+            </div>
 
-<div class="admin-card">
-    <h2>Manage Existing Products</h2>
+            <div class="admin-card">
+                <h2>Manage Existing Products</h2>
 
-    <div class="table-responsive">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT * FROM products ORDER BY id DESC";
-                $products = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT * FROM products ORDER BY id DESC";
+                            $products = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-                if (!empty($products)) {
-                    foreach ($products as $row) {
-                        echo "<tr>";
-                        echo "<td><img src='" . htmlspecialchars($row['image_url']) .
-                            "' class='admin-thumb' alt='product'></td>";
-                        echo "<td><strong>" . htmlspecialchars($row['name']) .
-                            "</strong></td>";
-                        echo "<td>$" . number_format($row['price'], 2) . "</td>";
-                        echo "<td class='action-cell'>
+                            if (!empty($products)) {
+                                foreach ($products as $row) {
+                                    echo "<tr>";
+                                    echo "<td><img src='" . htmlspecialchars($row['image_url']) .
+                                        "' class='admin-thumb' alt='product'></td>";
+                                    echo "<td><strong>" . htmlspecialchars($row['name']) .
+                                        "</strong></td>";
+                                    echo "<td>Rs. " . number_format((float) $row['price'], 2) . "</td>";
+                                    echo "<td class='action-cell'>
                                 <a href='edit_product.php?id=" . $row['id'] .
-                                "' class='btn-edit'>Edit</a>
+                                        "' class='btn-edit'>Edit</a>
                                 <a href='admin.php?delete=" . $row['id'] .
-                                "' class='btn-delete'
+                                        "' class='btn-delete'
                                 onclick='return confirm(\"Are you sure you want to delete this product?\");'>
                                 Delete</a>
                               </td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='4'>No products found in database.</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4'>No products found in database.</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-</div> <!-- closes admin-grid -->
-</div> <!-- closes admin-container -->
+        </div> <!-- closes admin-grid -->
+    </div> <!-- closes admin-container -->
 
-<?php include '../components/footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
 
-<script src="../script.js"></script>
+    <script src="../script.js"></script>
 </body>
+
 </html>

@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -34,81 +33,70 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ) {
 
         $error = "Please fill in all required fields!";
-
     }
 
     // Validate email address
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
         $error = "Please enter a valid email address!";
-
     }
 
     // Validate password length
     elseif (strlen($password) < 8) {
 
         $error = "Password must contain at least 8 characters!";
-
     }
 
     // Check password confirmation
-    
-elseif ($password !== $confirm_password) {
 
-    $error = "Passwords do not match!";
+    elseif ($password !== $confirm_password) {
 
-} else {
+        $error = "Passwords do not match!";
+    } else {
 
-    try {
+        try {
 
-        // Check whether email already exists
-        $stmt = $pdo->prepare(
-            "SELECT id FROM users WHERE email = ?"
-        );
-
-        $stmt->execute([$email]);
-
-        if ($stmt->fetch()) {
-
-            $error = "Email address is already registered!";
-
-        } else {
-
-            // Securely hash the password
-            $hashed_password = password_hash(
-                $password,
-                PASSWORD_DEFAULT
+            // Check whether email already exists
+            $stmt = $pdo->prepare(
+                "SELECT id FROM users WHERE email = ?"
             );
 
-            // Insert user details into database
-            $insert_stmt = $pdo->prepare(
-                "INSERT INTO users
+            $stmt->execute([$email]);
+
+            if ($stmt->fetch()) {
+
+                $error = "Email address is already registered!";
+            } else {
+
+                // Securely hash the password
+                $hashed_password = password_hash(
+                    $password,
+                    PASSWORD_DEFAULT
+                );
+
+                // Insert user details into database
+                $insert_stmt = $pdo->prepare(
+                    "INSERT INTO users
                 (full_name, email, telephone, address, password)
                 VALUES (?, ?, ?, ?, ?)"
-            );
+                );
 
-            $insert_stmt->execute([
-                $full_name,
-                $email,
-                $telephone,
-                $address,
-                $hashed_password
-            ]);
+                $insert_stmt->execute([
+                    $full_name,
+                    $email,
+                    $telephone,
+                    $address,
+                    $hashed_password
+                ]);
 
-            $success = "Account created successfully!";
+                $success = "Account created successfully!";
+            }
+        } catch (PDOException $e) {
 
+            error_log($e->getMessage());
+            $error = "Something went wrong. Please try again!";
         }
-
-    } catch (PDOException $e) {
-
-        error_log($e->getMessage());
-        $error = "Something went wrong. Please try again!";
-
     }
-
-}
-
-
 }
 
 ?>
@@ -116,6 +104,7 @@ elseif ($password !== $confirm_password) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,34 +112,35 @@ elseif ($password !== $confirm_password) {
     <title>Register - CeylonLeaf</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-      <?php include '../components/navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
     <div class="auth-container">
 
         <div class="auth-card">
 
-            
-<h2>Create Account</h2>
 
-<p class="auth-subtitle">Join CeylonLeaf today</p>
+            <h2>Create Account</h2>
 
-<!-- Display error message -->
-<?php if (!empty($error)): ?>
-    <div class="alert alert-error">
-        <?php echo htmlspecialchars($error); ?>
-    </div>
-<?php endif; ?>
+            <p class="auth-subtitle">Join CeylonLeaf today</p>
 
-<!-- Display success message -->
-<?php if (!empty($success)): ?>
-    <div class="alert alert-success">
-        <?php echo htmlspecialchars($success); ?>
-        <a href="../login/login.php">Click here to login</a>
-    </div>
-<?php endif; ?>
+            <!-- Display error message -->
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-error">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
 
-<!-- Registration form -->
+            <!-- Display success message -->
+            <?php if (!empty($success)): ?>
+                <div class="alert alert-success">
+                    <?php echo htmlspecialchars($success); ?>
+                    <a href="../login/login.php">Click here to login</a>
+                </div>
+            <?php endif; ?>
+
+            <!-- Registration form -->
             <form action="../login/register.php" method="POST">
 
                 <div class="form-group">
@@ -212,4 +202,5 @@ elseif ($password !== $confirm_password) {
     <script src="../script.js"></script>
 
 </body>
-</html> 
+
+</html>

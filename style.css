@@ -368,7 +368,8 @@ section {
     color: var(--text-color);
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--border-color);
@@ -376,9 +377,11 @@ section {
     color: var(--text-color);
     border-radius: 6px;
     font-size: 15px;
+    resize: vertical;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
 }
@@ -437,42 +440,49 @@ section {
     border: 1px solid #c3e6cb;
 }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-color);
-    color: var(--text-color);
-    border-radius: 6px;
-    font-size: 15px;
-    resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
 /* Admin Panel Styles */
 .admin-container {
-    padding: 40px 50px;
-    max-width: 1200px;
-    margin: 0 auto;
     min-height: 80vh;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .admin-title {
     text-align: center;
     color: var(--primary-color);
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    font-size: 26px;
 }
 
 .admin-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 30px;
+}
+
+.order-card {
+    border: 1px solid #e1e4e8;
+    background: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.order-header {
+    background: var(--bg-color);
+    color: var(--primary-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 @media (max-width: 850px) {
@@ -496,6 +506,46 @@ section {
     padding-bottom: 10px;
 }
 
+.order-body {
+    padding: 20px;
+}
+
+.customer-info-box {
+    background: var(--card-bg);
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.items-table th,
+.items-table td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    font-size: 14px;
+}
+
+.items-table th {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.status-select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
 /* Table Styling */
 .table-responsive {
     overflow-x: auto;
@@ -507,10 +557,15 @@ section {
     margin-top: 10px;
 }
 
+.admin-table tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
 .admin-table th,
 .admin-table td {
     padding: 12px;
     text-align: left;
+    vertical-align: middle;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-color);
 }
@@ -525,21 +580,33 @@ section {
     height: 50px;
     object-fit: cover;
     border-radius: 4px;
+    display: block;
 }
 
 .action-cell {
-    display: flex;
-    gap: 8px;
+    display: table-cell;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 
-.btn-edit {
-    background: #007bff;
+.action-cell a+a {
+    margin-left: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    display: inline-block;
     color: white;
     padding: 6px 12px;
     border-radius: 4px;
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
+    line-height: 1.2;
+}
+
+.btn-edit {
+    background: #007bff;
 }
 
 .btn-edit:hover {
@@ -548,12 +615,6 @@ section {
 
 .btn-delete {
     background: #dc3545;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
 }
 
 .btn-delete:hover {
@@ -561,48 +622,6 @@ section {
 }
 
 /* Cart & History Styles */
-.cart-container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 20px;
-    background: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-}
-
-.cart-table th,
-.cart-table td {
-    vertical-align: middle;
-}
-
-.cart-summary-box {
-    margin-top: 25px;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 15px;
-}
-
-.cart-summary-box h3 {
-    color: var(--primary-color);
-}
-
-.cart-summary-box button {
-    max-width: 300px;
-}
-
-.btn-link {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 14px;
-}
-
-/* Shopping Cart Styles */
 .cart-container {
     padding: 40px 50px;
     max-width: 1200px;
@@ -645,12 +664,40 @@ section {
 .cart-table td {
     padding: 12px;
     text-align: left;
+    vertical-align: middle;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-color);
 }
 
 .cart-table th {
     color: var(--primary-color);
+}
+
+.cart-summary-box {
+    margin-top: 25px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.cart-summary-box h3 {
+    color: var(--primary-color);
+}
+
+.cart-summary-box button {
+    max-width: 300px;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
 }
 
 .product-info-cell {
@@ -707,44 +754,4 @@ section {
 .empty-cart p {
     font-size: 18px;
     margin-bottom: 20px;
-}
-
-/* Bill / Invoice Modal Styles */
-.bill-modal-content {
-    max-width: 600px;
-    text-align: left;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.bill-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 15px 0;
-}
-
-.bill-table th,
-.bill-table td {
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
-    text-align: left;
-    color: var(--text-color);
-}
-
-.payment-options {
-    margin: 20px 0;
-    padding: 15px;
-    background: var(--bg-color);
-    border-radius: 6px;
-}
-
-.radio-option {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.disabled-option {
-    opacity: 0.5;
 }
