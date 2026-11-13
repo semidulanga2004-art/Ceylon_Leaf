@@ -708,3 +708,43 @@ section {
     font-size: 18px;
     margin-bottom: 20px;
 }
+
+/* Bill / Invoice Modal Styles */
+.bill-modal-content {
+    max-width: 600px;
+    text-align: left;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.bill-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.bill-table th,
+.bill-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    color: var(--text-color);
+}
+
+.payment-options {
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--bg-color);
+    border-radius: 6px;
+}
+
+.radio-option {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.disabled-option {
+    opacity: 0.5;
+}
