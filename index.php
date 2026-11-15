@@ -81,7 +81,7 @@
     <!-- About Us Section -->
     <section class="about-us" id="aboutus">
         <h2 class="section-title">About Us</h2>
-        <p>Welcome to CeylonLeaf. This journey began from a simple thought—a <strong>semis' idea forced to start it</strong>. We are dedicated to bringing you the finest, hand-picked tea leaves directly from the lush estates of our homeland to your cup. Quality and authenticity are the core of our business.</p>
+        <p>Welcome to CeylonLeaf! Inspired by Sri Lanka's rich tea heritage, we bring you the finest Ceylon teas with exceptional quality and refreshing flavours. Experience the true taste of Sri Lanka in every cup!</p>
     </section>
 
     <!-- Include Footer -->
