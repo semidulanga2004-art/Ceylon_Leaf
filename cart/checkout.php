@@ -172,8 +172,8 @@ $grand_total = $subtotal + $vat;
             }
         }, 1000);
     </script>
+    <script src="../script.js"></script>
 
 </body>
 
 </html>
-<script src="../script.js"></script>
