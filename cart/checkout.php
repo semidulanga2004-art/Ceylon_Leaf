@@ -105,7 +105,7 @@ $grand_total = $subtotal + $vat;
                         </div>
                     </div>
 
-                    <button type="submit" class="pay-btn">Authorize & Pay $<?php echo number_format($grand_total, 2); ?></button>
+                    <button type="submit" class="pay-btn">Authorize & Pay Rs.<?php echo number_format($grand_total, 2); ?></button>
                 </form>
 
                 <div style="text-align: center; margin-top: 15px;">
@@ -152,7 +152,7 @@ $grand_total = $subtotal + $vat;
                 <div class="receipt-total-box">
                     <div class="receipt-line total-pay">
                         <span>You have to Pay</span>
-                        <span class="total-price">Rs.<?php echo number_format($grand_total, 2); ?> USD</span>
+                        <span class="total-price">Rs.<?php echo number_format($grand_total, 2); ?> </span>
                     </div>
                 </div>
             </div>
