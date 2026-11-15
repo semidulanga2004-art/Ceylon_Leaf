@@ -4,7 +4,7 @@ include '../database/db_connect.php';
 
 // Check if owner/admin is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.php");
+    header("Location: ../login/login.php");
     exit();
 }
 
@@ -27,12 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Orders View - CeylonLeaf</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
-    <?php include 'navbar.php'; ?>
+    <?php include '../components/navbar.php'; ?>
 
     <div class="admin-container">
         <h1 class="admin-title">📦 Customer Orders Management (Owner Panel)</h1>
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 15px;">
-                            <strong style="color: #2c5e1a; font-size: 16px;">Total: $<?php echo number_format($order['total_amount'], 2); ?></strong>
+                            <strong style="color: #2c5e1a; font-size: 16px;">Total: Rs.<?php echo number_format($order['total_amount'], 2); ?></strong>
 
                             <!-- Status Update Form -->
                             <form action="admin_orders.php" method="POST">
@@ -107,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                                     <tr>
                                         <td><?php echo htmlspecialchars($item['product_name']); ?></td>
                                         <td><?php echo $item['quantity']; ?></td>
-                                        <td>$<?php echo number_format($item['price'], 2); ?></td>
-                                        <td>$<?php echo number_format($subtotal, 2); ?></td>
+                                        <td>Rs.<?php echo number_format($item['price'], 2); ?></td>
+                                        <td>Rs.<?php echo number_format($subtotal, 2); ?></td>
                                     </tr>
                                 <?php
                                 endwhile;
@@ -127,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
         <?php endif; ?>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
+    <script src="../script.js"></script>
 </body>
 
 </html>
