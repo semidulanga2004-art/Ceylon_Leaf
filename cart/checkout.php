@@ -11,7 +11,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 // item select wela nathnam redirect karnawa
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['selected_items'])) {
-    header("Location: cart.php");
+    header("Location: ../cart/cart.php");
     exit();
 }
 
@@ -38,7 +38,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 $stmt->closeCursor();
 
-$vat = $subtotal * 0.10;
+$vat = $subtotal * 0.03;
 $grand_total = $subtotal + $vat;
 
 ?>
@@ -144,7 +144,7 @@ $grand_total = $subtotal + $vat;
                         <strong>$<?php echo number_format($subtotal, 2); ?></strong>
                     </div>
                     <div class="receipt-line">
-                        <span>VAT (10%)</span>
+                        <span>VAT (3%)</span>
                         <strong>$<?php echo number_format($vat, 2); ?></strong>
                     </div>
                 </div>
