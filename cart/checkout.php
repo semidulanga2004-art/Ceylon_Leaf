@@ -38,7 +38,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 $stmt->closeCursor();
 
-$vat = $subtotal * 0.03;
+$vat = $subtotal * 0.10; // 10% VAT
 $grand_total = $subtotal + $vat;
 
 ?>
@@ -141,18 +141,18 @@ $grand_total = $subtotal + $vat;
                     </div>
                     <div class="receipt-line">
                         <span>Subtotal</span>
-                        <strong>$<?php echo number_format($subtotal, 2); ?></strong>
+                        <strong>Rs.<?php echo number_format($subtotal, 2); ?></strong>
                     </div>
                     <div class="receipt-line">
-                        <span>VAT (3%)</span>
-                        <strong>$<?php echo number_format($vat, 2); ?></strong>
+                        <span>VAT (10%)</span>
+                        <strong>Rs.<?php echo number_format($vat, 2); ?></strong>
                     </div>
                 </div>
 
                 <div class="receipt-total-box">
                     <div class="receipt-line total-pay">
                         <span>You have to Pay</span>
-                        <span class="total-price">$<?php echo number_format($grand_total, 2); ?> USD</span>
+                        <span class="total-price">Rs.<?php echo number_format($grand_total, 2); ?> USD</span>
                     </div>
                 </div>
             </div>

@@ -89,6 +89,7 @@ $status_display = !empty($order['status']) ? $order['status'] : 'Not Packed';
     </table>
 
     <div style="text-align:right; margin-top:16px; font-size:16px;">
+        <strong>VAT(10%): <span style="color: #2c5e1a;">Rs.<?php echo number_format((float)$order['total_amount'] * 0.10, 2); ?></span></strong><br>
         <strong>Total Amount: <span style="color: #2c5e1a;">Rs.<?php echo number_format((float)$order['total_amount'], 2); ?></span></strong>
     </div>
 </div>
