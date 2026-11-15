@@ -141,8 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ------------------------------
 
     // Find all hero slides on the page.
-    const slides = document.querySelectorAll('.hero-slide');
-
+    const slides = document.querySelectorAll('.slider .slide');
+    console.log("Number of slides:", slides.length);
+    console.log("Slides detected:", slides); 
     // Start with the first slide.
     let currentSlide = 0;
 
@@ -169,11 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 2. SCROLL REVEAL ANIMATIONS
+    //  SCROLL REVEAL ANIMATIONS
     // ------------------------------
 
     // Find all elements that should animate when scrolling.
-    const revealElements = document.querySelectorAll('.slide-up');
+    const revealElements = document.querySelectorAll('.product-card');
 
     // Check whether the browser supports IntersectionObserver.
     if ('IntersectionObserver' in window) {
@@ -222,8 +223,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------------------
-    // 1. PRODUCT MODAL POPUP
-    // ------------------------------
+    //  PRODUCT MODAL POPUP
+    // -----    -------------------------
 
     // Get the modal elements from the HTML.
     const modal = document.getElementById("productModal");
@@ -274,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 2. QUANTITY INCREASE / DECREASE
+    //  QUANTITY INCREASE / DECREASE
     // ------------------------------
 
     // Find all quantity buttons.
@@ -317,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 3. ADD TO CART FALLBACK
+    //  ADD TO CART FALLBACK
     // ------------------------------
 
     // Find all Add to Cart buttons.
@@ -357,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 
     // ------------------------------
-    // 1. GET CART ELEMENTS
+    //  GET CART ELEMENTS
     // ------------------------------
 
     const checkboxes = document.querySelectorAll('.item-checkbox');
@@ -367,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 2. CALCULATE CART TOTAL
+    // CALCULATE CART TOTAL
     // ------------------------------
 
     function calculateCartTotal() {
@@ -422,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 3. INDIVIDUAL ITEM SELECTION
+    //  INDIVIDUAL ITEM SELECTION
     // ------------------------------
 
     if (checkboxes.length > 0) {
@@ -438,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 4. SELECT ALL ITEMS
+    // SELECT ALL ITEMS
     // ------------------------------
 
     if (selectAll) {
@@ -457,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ------------------------------
-    // 5. CHECKOUT FORM
+    //  CHECKOUT FORM
     // ------------------------------
 
     const checkoutForm = document.getElementById('checkout-form');

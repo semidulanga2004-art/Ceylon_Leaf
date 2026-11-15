@@ -26,7 +26,7 @@
 
             <!-- Second Slide: Video -->
             <div class="slide">
-                <video src="/others/tea.mp4" autoplay muted loop></video>
+                <video src="others/tea.mp4" autoplay muted loop></video>
             </div>
 
             <div class="slide">
