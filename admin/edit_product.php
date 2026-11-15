@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_product'])) {
 
         if (in_array($fileExtension, $allowedExtensions)) {
             $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
-            $dest_path = 'uploads/' . $newFileName;
+            $dest_path = '../others/uploads/' . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 if (
