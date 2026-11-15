@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
             <a href="/ceylon_leaf/components/logout.php" class="btn-login">Logout</a>
 
-        <?php else: ?> <!If the user has not logged in it shows the below navigation links
+        <?php else: ?> <!--If the user has not logged in it shows the below navigation links -->
 
                 <!-- Day / Night Mode Toggle Button -->
                 <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle Theme">🌙</button>
