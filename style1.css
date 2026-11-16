@@ -112,24 +112,31 @@
     box-sizing: border-box;
 }
 
+/* Card input container */
 .card-input-box {
     position: relative;
+    margin-bottom: 15px;
 }
 
+/* Card logo on the left */
 .card-brand-logo {
     position: absolute;
-    left: 10px;
-    top: 36px;
+    left: 12px;
+    top: 5px;
 }
 
+
+/* Card number input */
 .card-input-box input {
-    padding-left: 35px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
+/* Green check icon on the right */
 .checked-icon {
     position: absolute;
     right: 12px;
-    top: 36px;
+    top: 8px;
     color: green;
 }
 
